@@ -58,7 +58,7 @@ class BasePage:
     def wait_until_clickable(self, locator: Tuple[str, str]):
         return self._wait_for_condition(EC.element_to_be_clickable(locator), "clickable", locator)
 
-    def wait_until_visible(self, locator: Tuple[str, str]):
+    def wait_until_visible(self, locator: Tuple[str, str],timeout:int=10):
         return self._wait_for_condition(EC.visibility_of_element_located(locator), "visible", locator)
 
     def wait_until_present(self, locator: Tuple[str, str]):
@@ -162,3 +162,18 @@ class BasePage:
         Screenshot.take(self.driver, f"{action}_error_{name}")
         logger.error(f"❌ {action} failed for {locator}: {error}", exc_info=True)
         raise error
+
+    def wait_until_url_contains(self, substring, timeout=10):
+        """
+        Waits until the current URL contains the given substring.
+        Useful for verifying navigation or redirects.
+        """
+        try:
+            WebDriverWait(self.driver, timeout).until(
+                EC.url_contains(substring)
+            )
+            return True
+        except Exception as e:
+            print(
+                f"Timeout: URL did not contain '{substring}' within {timeout} seconds. Current URL: {self.driver.current_url}")
+            return False
