@@ -1,6 +1,0 @@
-2025-11-29 11:59:32 [INFO] pages.base_page - Page fully loaded.
-2025-11-29 11:59:32 [INFO] pages.login.login - Opening: https://qaradius.in.qamajor.radius-ois.ai/play/login
-2025-11-29 11:59:32 [INFO] pages.base_page - Element visible: ('id', 'loginForm.username')
-2025-11-29 11:59:33 [INFO] pages.base_page - Element visible: ('id', 'password')
-2025-11-29 11:59:33 [INFO] pages.base_page - Element visible: ('id', 'loginForm.Login')
-2025-11-29 11:59:33 [INFO] pages.login.login - Login button is disabled — skipping click.
