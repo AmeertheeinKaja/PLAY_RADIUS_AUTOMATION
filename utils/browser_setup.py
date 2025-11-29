@@ -36,6 +36,13 @@ def setup_browser():
     chrome_options.add_argument("--disable-extensions")
     chrome_options.add_argument("--no-default-browser-check")
     chrome_options.add_argument("--no-first-run")
+    chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+    chrome_options.add_argument(r"--user-data-dir=C:\Selenium\ChromeProfile")
+    chrome_options.add_argument("--profile-directory=Profile 8")
+
+    chrome_options.add_argument("--allow-profiles-outside-user-dir")
+    chrome_options.add_argument("--enable-profile-shortcut-manager")
+    chrome_options.add_argument("--disable-features=OptimizationGuideModelDownloading")
     chrome_options.add_argument(
         "--disable-features=PasswordLeakDetection,PasswordCheck,"
         "PasswordManagerOnboarding,AutofillServerCommunication,"
@@ -52,6 +59,8 @@ def setup_browser():
         service=Service(ChromeDriverManager().install()),
         options=chrome_options,
     )
+
     driver.maximize_window()
     driver.implicitly_wait(3)
+    driver.delete_all_cookies()
     return driver

@@ -1,0 +1,1 @@
+2025-11-29 11:52:13 [INFO] utils.screenshot - Screenshot saved: D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\screenshots\test_shot_20251129_115213.png

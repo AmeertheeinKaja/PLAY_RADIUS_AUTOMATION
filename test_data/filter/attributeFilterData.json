@@ -1,0 +1,24 @@
+{
+  "filters": [
+    {
+      "name": "Contact Address",
+      "value": "6746663948"
+    },
+    {
+      "name": "Process Code",
+      "value": "RADIUS_OIS"
+    },
+    {
+      "name": "Interaction Type",
+      "value": "ib"
+    },
+    {
+      "name": "Rating",
+      "value": true
+    },
+     {
+      "name": "Channel",
+      "value": "call"
+    }
+  ]
+}

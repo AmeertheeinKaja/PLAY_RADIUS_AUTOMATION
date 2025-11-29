@@ -1,0 +1,13 @@
+2025-11-29 11:55:55 [INFO] pages.base_page - Page fully loaded.
+2025-11-29 11:55:55 [INFO] pages.login.login - Opening: https://qaradius.in.qamajor.radius-ois.ai/play/login
+2025-11-29 11:55:55 [INFO] pages.base_page - Element visible: ('id', 'loginForm.username')
+2025-11-29 11:55:56 [INFO] pages.base_page - Element visible: ('id', 'password')
+2025-11-29 11:55:56 [INFO] pages.base_page - Element visible: ('id', 'loginForm.Login')
+2025-11-29 11:55:56 [INFO] pages.login.login - Login submitted for user: playadmin
+2025-11-29 11:55:56 [INFO] pages.common.loader - Waiting for loader to disappear...
+2025-11-29 11:55:57 [INFO] pages.base_page - Loader appeared.
+2025-11-29 11:56:04 [INFO] pages.base_page - Loader disappeared.
+2025-11-29 11:56:04 [INFO] pages.common.loader - Loader Stopped.
+2025-11-29 11:56:04 [INFO] pages.login.login - Login submitted successfully.
+2025-11-29 11:56:04 [INFO] utils.screenshot - Screenshot saved: D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\screenshots\Login Submitted successfully_20251129_115604.png
+2025-11-29 11:56:04 [INFO] test_cases.test_login -  Login successful: https://qaradius.in.qamajor.radius-ois.ai/play/recording-list/all-records

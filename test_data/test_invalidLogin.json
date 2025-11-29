@@ -1,0 +1,13 @@
+{
+   "invalid_cases": [
+    { "case": "empty_fields", "username": "", "password": "", "expected": "disabled" },
+    { "case": "invalid_password", "username": "playadmin", "password": "wrongpass", "expected": "Incorrect loginid or password." },
+    { "case": "invalid_username", "username": "invalidUser", "password": "playadmin", "expected": "Incorrect loginid or password." }
+
+  ],
+  "valid_cases": [
+     { "case": "using_under_score", "username": "AdminQAuser", "password": "AdminQAuser", "expected": "/recording-list/all-records" },
+    { "case": "using_hyphen", "username": "playadmin", "password": "playadmin", "expected": "/recording-list/all-records" }
+
+  ]
+}

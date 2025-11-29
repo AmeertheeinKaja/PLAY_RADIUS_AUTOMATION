@@ -1,0 +1,56 @@
+2025-11-29 11:23:37 [INFO] test_cases.process.test_process_filter - Starting test_filter_process_by_code
+2025-11-29 11:23:44 [INFO] pages.base_page - Page fully loaded.
+2025-11-29 11:23:44 [INFO] pages.login.login - Opening: https://qaradius.in.qamajor.radius-ois.ai/play/login
+2025-11-29 11:23:44 [INFO] pages.base_page - Element visible: ('id', 'loginForm.username')
+2025-11-29 11:23:44 [INFO] pages.base_page - Element visible: ('id', 'password')
+2025-11-29 11:23:44 [INFO] pages.base_page - Element visible: ('id', 'loginForm.Login')
+2025-11-29 11:23:44 [INFO] pages.login.login - Login submitted for user: playadmin
+2025-11-29 11:23:44 [INFO] pages.common.loader - Waiting for loader to disappear...
+2025-11-29 11:23:45 [INFO] pages.base_page - Loader appeared.
+2025-11-29 11:23:52 [INFO] pages.base_page - Loader disappeared.
+2025-11-29 11:23:52 [INFO] pages.common.loader - Loader Stopped.
+2025-11-29 11:23:52 [INFO] pages.login.login - Login submitted successfully.
+2025-11-29 11:23:53 [INFO] utils.screenshot - Screenshot saved: D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\screenshots\Login Submitted successfully_20251129_112352.png
+2025-11-29 11:23:53 [INFO] pages.common.loader - Waiting for loader to disappear...
+2025-11-29 11:23:58 [INFO] pages.base_page - Loader was not observed during initial check, proceeding without waiting for invisibility.
+2025-11-29 11:23:58 [INFO] pages.common.loader - Loader Stopped.
+2025-11-29 11:23:58 [INFO] test_cases.process.test_process_filter - Login complete and page loaded.
+2025-11-29 11:23:58 [INFO] pages.common.loader - Waiting for loader to disappear...
+2025-11-29 11:24:03 [INFO] pages.base_page - Loader was not observed during initial check, proceeding without waiting for invisibility.
+2025-11-29 11:24:03 [INFO] pages.common.loader - Loader Stopped.
+2025-11-29 11:24:03 [INFO] pages.base_page - Element clickable: ('xpath', "//button[@title='Process']")
+2025-11-29 11:24:03 [INFO] pages.common.sidemenupage - Process Showing
+2025-11-29 11:24:04 [INFO] utils.screenshot - Screenshot saved: D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\screenshots\Process Showing_20251129_112403.png
+2025-11-29 11:24:04 [INFO] pages.common.loader - Waiting for loader to disappear...
+2025-11-29 11:24:09 [INFO] pages.base_page - Loader was not observed during initial check, proceeding without waiting for invisibility.
+2025-11-29 11:24:09 [INFO] pages.common.loader - Loader Stopped.
+2025-11-29 11:24:09 [INFO] test_cases.process.test_process_filter - Navigated to Process section.
+2025-11-29 11:24:09 [INFO] test_cases.process.test_process_filter - Opening filter panel and applying filter by code...
+2025-11-29 11:24:09 [INFO] pages.base_page - Element clickable: ('xpath', "//button[@title='Filter']")
+2025-11-29 11:24:20 [WARNING] pages.base_page - Filter UI not ready within timeout.
+2025-11-29 11:24:20 [INFO] pages.base_page - Element clickable: ('id', 'processCode')
+2025-11-29 11:24:20 [INFO] pages.base_page - Cleared and typed 'SMK_PLAY_24OCT_A' in element: ('id', 'processCode')
+2025-11-29 11:24:20 [INFO] test_cases.process.test_process_filter - Entered process code: SMK_PLAY_24OCT_A
+2025-11-29 11:24:20 [INFO] pages.base_page - Element clickable: ('xpath', "//button[normalize-space(text())='Submit']")
+2025-11-29 11:24:20 [INFO] pages.base_page - Clicked element: ('xpath', "//button[normalize-space(text())='Submit']")
+2025-11-29 11:24:20 [INFO] pages.common.loader - Waiting for loader to disappear...
+2025-11-29 11:24:20 [INFO] pages.base_page - Loader appeared.
+2025-11-29 11:24:26 [INFO] pages.base_page - Loader disappeared.
+2025-11-29 11:24:26 [INFO] pages.common.loader - Loader Stopped.
+2025-11-29 11:24:26 [INFO] pages.base_page - Page fully loaded.
+2025-11-29 11:24:26 [INFO] test_cases.process.test_process_filter - Filter applied by code and page loaded.
+2025-11-29 11:24:26 [INFO] test_cases.process.test_process_filter - Verifying filtered processes by code...
+2025-11-29 11:24:26 [INFO] pages.base_page - Page fully loaded.
+2025-11-29 11:24:31 [INFO] pages.base_page - Element visible: ('xpath', "//table[contains(@class, 'rad_grid_table')]/tbody/tr[1]//td[1]//span[@class='record_title']")
+2025-11-29 11:24:31 [INFO] test_cases.process.test_process_filter - Successfully filtered and verified processes by code: SMK_PLAY_24OCT_A
+2025-11-29 11:24:31 [INFO] pages.common.loader - Waiting for loader to disappear...
+2025-11-29 11:24:36 [INFO] pages.base_page - Loader was not observed during initial check, proceeding without waiting for invisibility.
+2025-11-29 11:24:36 [INFO] pages.common.loader - Loader Stopped.
+2025-11-29 11:24:36 [INFO] pages.base_page - Element clickable: ('xpath', "//img[@alt='Profile']")
+2025-11-29 11:24:36 [INFO] pages.base_page - Clicked element: ('xpath', "//img[@alt='Profile']")
+2025-11-29 11:24:36 [INFO] pages.base_page - Element clickable: ('xpath', "//button[@title='Logout']")
+2025-11-29 11:24:37 [INFO] pages.base_page - Clicked element: ('xpath', "//button[@title='Logout']")
+2025-11-29 11:24:37 [INFO] pages.login.logout - Logout Successfully.
+2025-11-29 11:24:39 [INFO] utils.screenshot - Screenshot saved: D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\screenshots\Logout_Successfully_20251129_112437.png
+2025-11-29 11:24:39 [INFO] pages.base_page - Element visible: ('xpath', "//span[text()='Login']")
+2025-11-29 11:24:39 [INFO] test_cases.process.test_process_filter - Logout complete. Test finished.

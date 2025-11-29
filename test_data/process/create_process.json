@@ -1,0 +1,163 @@
+{
+    "process_code": "Play_Automation_Process_",
+    "process_name": "Play_Automation_Process_",
+    "review_rating": true,
+    "channels": [
+
+       "call"
+
+    ],
+    "channel_config": {
+        "call": {
+            "storage": {
+                "type": "http",
+                "http": {
+                    "domain_url": "https://192.168.60.173/"
+                },
+                "sftp": {
+                    "hostName": "192.168.60.195",
+                    "port": "22",
+                    "username": "root",
+                    "password": "root",
+                    "dirPath": ""
+                },
+                "ftp": {
+                    "hostName": "192.168.60.195",
+                    "port": "22",
+                    "username": "root",
+                    "password": "root",
+                    "dirPath": ""
+                }
+            },
+            "stt": {
+                "speech_to_text": true,
+                "conversion_mode": "manualMode",
+              "engine_name": "google",
+                "bucket_name": "play-asr",
+                "bucket_dir": "QARADIUS",
+               "audioFile": "D:\\visnet\\audio1.mp3",
+                "keyFile": "D:\\visnet\\google_api_key.json",
+              "sample_rate": 16000
+            },
+            "sa": {
+
+                "sentiment_analysis": true,
+
+                "engine_name": "google",
+                "conversion_mode": "manualMode",
+                "keyFile": "D:\\visnet\\google_api_key.json",
+
+                "sentiment_text": "I believe AI will create new opportunities, but it will also require professionals to adapt their skill sets"
+            }
+        },
+        "chat": {
+            "storage": {
+                "type": "http",
+                "http": {
+                    "domain_url": "https://192.168.60.173/"
+                },
+                "sftp": {
+                    "hostName": "192.168.60.195",
+                    "port": "22",
+                    "username": "root",
+                    "password": "root",
+                    "dirPath": ""
+                },
+                "ftp": {
+                    "hostName": "192.168.60.195",
+                    "port": "22",
+                    "username": "root",
+                    "password": "root",
+                    "dirPath": ""
+                }
+            },
+
+            "sa": {
+
+                "sentiment_analysis": true,
+
+                "engine_name": "google",
+                "conversion_mode": "autoMode",
+                "keyFile": "D:\\visnet\\google_api_key.json",
+
+                "sentiment_text": "I believe AI will create new opportunities, but it will also require professionals to adapt their skill sets"
+            }
+        },
+        "email": {
+            "storage": {
+                "type": "http",
+                "http": {
+                    "domain_url": "https://192.168.60.173/"
+                },
+                "sftp": {
+                    "hostName": "192.168.60.195",
+                    "port": "22",
+                    "username": "root",
+                    "password": "root",
+                    "dirPath": ""
+                },
+                "ftp": {
+                    "hostName": "192.168.60.195",
+                    "port": "22",
+                    "username": "root",
+                    "password": "root",
+                    "dirPath": ""
+                }
+            },
+
+            "sa": {
+
+                "sentiment_analysis": true,
+
+                "engine_name": "google",
+                "conversion_mode": "manualMode",
+                "keyFile": "D:\\visnet\\google_api_key.json",
+
+                "sentiment_text": "I believe AI will create new opportunities, but it will also require professionals to adapt their skill sets"
+            }
+        },
+       "video": {
+            "storage": {
+                "type": "http",
+                "http": {
+                    "domain_url": "https://192.168.60.173/"
+                },
+                "sftp": {
+                    "hostName": "192.168.60.195",
+                    "port": "22",
+                    "username": "root",
+                    "password": "root",
+                    "dirPath": ""
+                },
+                "ftp": {
+                    "hostName": "192.168.60.195",
+                    "port": "22",
+                    "username": "root",
+                    "password": "root",
+                    "dirPath": ""
+                }
+            },
+            "stt": {
+                "speech_to_text": true,
+                "conversion_mode": "manualMode",
+              "engine_name": "google",
+                "bucket_name": "play-asr",
+                "bucket_dir": "QARADIUS",
+               "audioFile": "D:\\visnet\\video.mp4",
+                "keyFile": "D:\\visnet\\google_api_key.json",
+              "sample_rate": 16000
+            },
+
+            "sa": {
+
+                "sentiment_analysis": true,
+
+                "engine_name": "google",
+                "conversion_mode": "manualMode",
+                "keyFile": "D:\\visnet\\google_api_key.json",
+
+                "sentiment_text": "I believe AI will create new opportunities, but it will also require professionals to adapt their skill sets"
+            }
+        }
+    }
+}

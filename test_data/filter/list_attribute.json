@@ -1,0 +1,31 @@
+{
+  "enable_attributes": ["Record ID","Session Time", "Channel","Hold Duration","Process Code"],
+  "disable_attributes": [
+"Process Code",
+  "User ID",
+  "User Name",
+  "User Address",
+  "Record ID",
+  "Disposition",
+  "Connection Type",
+  "Session Action",
+  "File",
+  "Hold Duration",
+  "Cause",
+  "Status",
+  "Contact",
+  "Session Time",
+  "Ring Time",
+  "Talk Time",
+  "Wrapup Time",
+  "Interaction ID",
+  "Channel",
+  "Interaction Type",
+  "Contact Address",
+  "Caller ID",
+  "Dialed ID",
+  "Start At",
+  "End At",
+  "Interaction Status"
+  ]
+}

@@ -1,0 +1,4 @@
+Opening: https://qaradius.in.qamajor.radius-ois.ai/play/login
+🔹 Running case: using_hyphen with user 'playadmin'
+Loader Stopped
+ Passed case: using_hyphen

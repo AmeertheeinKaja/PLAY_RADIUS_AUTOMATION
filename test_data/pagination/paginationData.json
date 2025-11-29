@@ -1,0 +1,39 @@
+{
+  "pagination": {
+    "base_url": "/all-records",
+
+    "actions": [
+      {
+        "testName": "next_button",
+        "action": "next",
+        "expectedChange": 1
+      },
+      {
+        "testName": "previous_button",
+        "action": "previous",
+        "expectedChange": 0
+      },
+      {
+        "testName": "first_page_button",
+        "action": "first",
+        "pageNumber": 1,
+        "expectedPage": 1
+      },
+      {
+        "testName": "last_page_button",
+        "action": "last",
+        "expectedPage": "max"
+      },
+      {
+        "testName": "go_to_page_3",
+        "action": "goto",
+        "pageNumber": 3,
+        "expectedPage": 3
+      }
+    ],
+
+    "next_page": {
+      "expected_increment": 1
+    }
+  }
+}

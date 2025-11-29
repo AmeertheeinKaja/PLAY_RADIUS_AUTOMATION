@@ -1,21 +1,27 @@
 import json
 import os
 
+
+# ... existing code ...
+
 def get_next_process_number():
-    counter_path = os.path.join("testdata", "counter.json")
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    # Corrected "testdata" to "test_data"
+    file_path = os.path.join(BASE_DIR, "test_data", "counter.json")
 
-    # Ensure the file exists
-    if not os.path.exists(counter_path):
-        with open(counter_path, "w") as f:
-            json.dump({"process_counter": 0}, f, indent=2)
+    # ... rest of the file ...
 
-    # Read current counter
-    with open(counter_path, "r") as f:
-        counter = json.load(f)
+    print("Counter file path:", file_path)
 
-    # Increment and save
-    counter["process_counter"] += 1
-    with open(counter_path, "w") as f:
-        json.dump(counter, f, indent=2)
+    # Read JSON
+    with open(file_path, "r") as f:
+        data = json.load(f)
 
-    return counter["process_counter"]
+    # Increment
+    data["process_counter"] += 1
+
+    # Save back
+    with open(file_path, "w") as f:
+        json.dump(data, f, indent=4)
+
+    return data["process_counter"]

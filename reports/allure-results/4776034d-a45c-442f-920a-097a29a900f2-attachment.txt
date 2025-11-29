@@ -1,0 +1,4 @@
+Opening: https://qaradius.in.qamajor.radius-ois.ai/play/login
+🔹 Running case: using_under_score with user 'AdminQAuser'
+Loader Stopped
+ Passed case: using_under_score

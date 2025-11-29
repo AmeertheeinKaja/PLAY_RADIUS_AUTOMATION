@@ -3,7 +3,7 @@ import os
 
 def load_test_data(filename):
     """Loads JSON test data from the testdata folder."""
-    base_dir = os.path.join(os.getcwd(), "testdata")
+    base_dir = os.path.join(os.getcwd(), "test_data")
     file_path = os.path.join(base_dir, filename)
 
     if not os.path.exists(file_path):

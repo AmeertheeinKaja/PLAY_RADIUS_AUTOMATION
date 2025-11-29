@@ -1,0 +1,3 @@
+Opening: https://qaradius.in.qamajor.radius-ois.ai/play/login
+Login button is disabled — skipping click.
+✅ Login button is disabled as expected for empty inputs.

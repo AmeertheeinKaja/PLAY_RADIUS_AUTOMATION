@@ -1,0 +1,41 @@
+{
+  "active": {
+        "Contact Address": "6746663948",
+    "Interaction Type": "ib",
+     "Process Code": "RADIUS_OIS"
+  },
+  "disabled": {
+
+    "Skill": "Skill",
+    "Channel": "call",
+    "Interaction Type": "ob",
+    "Start At To ": "Start At",
+    "End At From": "End At",
+    "Connection ID": "Connection ID",
+
+    "Session Time": "Session Time",
+    "Ring Time": "Ring Time",
+    "Talk Time": "Talk Time",
+    "Wrapup Time": "Wrapup Time",
+    "Record ID": "NL1762155336842EN",
+    "Process Code": "RADIUS_OIS",
+    "Process Name": "CODE_AUGUST_04",
+    "Contact Address": "6746663948",
+    "Interaction ID": "be76a2973345428b8fea29f5422eceea",
+    "Caller ID": "666399",
+    "Dialed ID": "7978032297",
+    "Interaction Status": "answer",
+    "Interaction Action": "offered",
+    "Connection Type": "Agent",
+    "User Address": "7102",
+    "User ID": "sollu",
+    "Contact ID": "298",
+    "Cause": "NewCall",
+    "Disposition": "success",
+    "User Name": "suchilenka",
+    "Rating": true,
+    "Transcript": false,
+    "Sentiment": false,
+    "IsBye": true
+  }
+}

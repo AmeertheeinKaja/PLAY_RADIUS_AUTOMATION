@@ -1,0 +1,22 @@
+2025-11-29 11:48:49 [INFO] pages.base_page - Page fully loaded.
+2025-11-29 11:48:49 [INFO] pages.login.login - Opening: https://qaradius.in.qamajor.radius-ois.ai/play/login
+2025-11-29 11:48:49 [INFO] pages.base_page - Element visible: ('id', 'loginForm.username')
+2025-11-29 11:48:49 [INFO] pages.base_page - Element visible: ('id', 'password')
+2025-11-29 11:48:50 [INFO] pages.base_page - Element visible: ('id', 'loginForm.Login')
+2025-11-29 11:48:50 [INFO] pages.login.login - Login submitted for user: playadmin
+2025-11-29 11:48:50 [INFO] pages.common.loader - Waiting for loader to disappear...
+2025-11-29 11:48:50 [INFO] pages.base_page - Loader appeared.
+2025-11-29 11:48:58 [INFO] pages.base_page - Loader disappeared.
+2025-11-29 11:48:58 [INFO] pages.common.loader - Loader Stopped.
+2025-11-29 11:48:58 [INFO] pages.login.login - Login submitted successfully.
+2025-11-29 11:48:58 [INFO] utils.screenshot - Screenshot saved: D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\screenshots\Login Submitted successfully_20251129_114858.png
+2025-11-29 11:48:58 [INFO] pages.common.loader - Waiting for loader to disappear...
+2025-11-29 11:49:03 [INFO] pages.base_page - Loader was not observed during initial check, proceeding without waiting for invisibility.
+2025-11-29 11:49:03 [INFO] pages.common.loader - Loader Stopped.
+2025-11-29 11:49:03 [INFO] pages.base_page - Element present: ('css selector', 'ul.pagination li.active a')
+2025-11-29 11:49:03 [INFO] pages.base_page - Element clickable: ('css selector', 'ul.pagination span.icon-pagination-right')
+2025-11-29 11:49:03 [INFO] pages.common.loader - Waiting for loader to disappear...
+2025-11-29 11:49:03 [INFO] pages.base_page - Loader appeared.
+2025-11-29 11:49:10 [INFO] pages.base_page - Loader disappeared.
+2025-11-29 11:49:10 [INFO] pages.common.loader - Loader Stopped.
+2025-11-29 11:49:10 [INFO] pages.base_page - Element present: ('css selector', 'ul.pagination li.active a')

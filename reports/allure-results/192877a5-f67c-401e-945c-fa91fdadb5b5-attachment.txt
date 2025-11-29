@@ -1,0 +1,603 @@
+2025-11-29 11:21:04 [INFO] test_cases.process.channel_config.test_call_config_stt - Starting test_filter_process_by_name
+2025-11-29 11:21:04 [INFO] test_cases.process.channel_config.test_call_config_stt - Opening login page...
+2025-11-29 11:21:12 [INFO] pages.base_page - Page fully loaded.
+2025-11-29 11:21:12 [INFO] pages.login.login - Opening: https://qaradius.in.qamajor.radius-ois.ai/play/login
+2025-11-29 11:21:12 [INFO] test_cases.process.channel_config.test_call_config_stt - Login page opened.
+2025-11-29 11:21:12 [INFO] test_cases.process.channel_config.test_call_config_stt - Attempting login...
+2025-11-29 11:21:12 [INFO] pages.base_page - Element visible: ('id', 'loginForm.username')
+2025-11-29 11:21:13 [INFO] pages.base_page - Element visible: ('id', 'password')
+2025-11-29 11:21:13 [INFO] pages.base_page - Element visible: ('id', 'loginForm.Login')
+2025-11-29 11:21:13 [INFO] pages.login.login - Login submitted for user: playadmin
+2025-11-29 11:21:13 [INFO] pages.common.loader - Waiting for loader to disappear...
+2025-11-29 11:21:13 [INFO] pages.base_page - Loader appeared.
+2025-11-29 11:21:21 [INFO] pages.base_page - Loader disappeared.
+2025-11-29 11:21:21 [INFO] pages.common.loader - Loader Stopped.
+2025-11-29 11:21:21 [INFO] pages.login.login - Login submitted successfully.
+2025-11-29 11:21:21 [INFO] utils.screenshot - Screenshot saved: D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\screenshots\Login Submitted successfully_20251129_112121.png
+2025-11-29 11:21:21 [INFO] test_cases.process.channel_config.test_call_config_stt - Login complete.
+2025-11-29 11:21:21 [INFO] test_cases.process.channel_config.test_call_config_stt - Waiting for page to load after login...
+2025-11-29 11:21:21 [INFO] pages.common.loader - Waiting for loader to disappear...
+2025-11-29 11:21:26 [INFO] pages.base_page - Loader was not observed during initial check, proceeding without waiting for invisibility.
+2025-11-29 11:21:26 [INFO] pages.common.loader - Loader Stopped.
+2025-11-29 11:21:26 [INFO] test_cases.process.channel_config.test_call_config_stt - Page loaded.
+2025-11-29 11:21:26 [INFO] test_cases.process.channel_config.test_call_config_stt - Navigating to Process section via Side Menu...
+2025-11-29 11:21:26 [INFO] pages.common.loader - Waiting for loader to disappear...
+2025-11-29 11:21:31 [INFO] pages.base_page - Loader was not observed during initial check, proceeding without waiting for invisibility.
+2025-11-29 11:21:31 [INFO] pages.common.loader - Loader Stopped.
+2025-11-29 11:21:31 [INFO] pages.base_page - Element clickable: ('xpath', "//button[@title='Process']")
+2025-11-29 11:21:32 [INFO] pages.common.sidemenupage - Process Showing
+2025-11-29 11:21:32 [INFO] utils.screenshot - Screenshot saved: D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\screenshots\Process Showing_20251129_112132.png
+2025-11-29 11:21:32 [INFO] test_cases.process.channel_config.test_call_config_stt - Navigated to Process section.
+2025-11-29 11:21:32 [INFO] pages.common.loader - Waiting for loader to disappear...
+2025-11-29 11:21:32 [INFO] pages.base_page - Loader appeared.
+2025-11-29 11:21:38 [INFO] pages.base_page - Loader disappeared.
+2025-11-29 11:21:38 [INFO] pages.common.loader - Loader Stopped.
+2025-11-29 11:21:38 [INFO] pages.base_page - Element clickable: ('xpath', "//button[@id='add-entity']")
+2025-11-29 11:21:42 [INFO] automation - Setting channel configuration
+2025-11-29 11:21:42 [INFO] pages.base_page - Element clickable: ('xpath', "//*[@id='process-basic-info']/div[2]/div/form/div/div/div[4]/div/div/div[1]/label")
+2025-11-29 11:21:42 [INFO] pages.base_page - Element clickable: ('xpath', "//button[@title='Save']")
+2025-11-29 11:21:43 [INFO] pages.common.loader - Waiting for loader to disappear...
+2025-11-29 11:21:43 [INFO] pages.base_page - Loader appeared.
+2025-11-29 11:21:48 [INFO] pages.base_page - Loader disappeared.
+2025-11-29 11:21:48 [INFO] pages.common.loader - Loader Stopped.
+2025-11-29 11:21:48 [INFO] utils.screenshot - Screenshot saved: D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\screenshots\Process_Created_Play_Automation_Process_917_20251129_112148.png
+2025-11-29 11:21:48 [INFO] pages.base_page - Element clickable: ('xpath', "//*[@id='stt-tab-call']")
+2025-11-29 11:21:49 [INFO] pages.common.loader - Waiting for loader to disappear...
+2025-11-29 11:21:54 [INFO] pages.base_page - Loader was not observed during initial check, proceeding without waiting for invisibility.
+2025-11-29 11:21:54 [INFO] pages.common.loader - Loader Stopped.
+2025-11-29 11:21:54 [INFO] automation - STT Tab opened
+2025-11-29 11:21:54 [INFO] pages.base_page - Element clickable: ('xpath', "//div[@id='stt-tab-call-pane']//button[@class='section_form_acts_btn' and @title='Edit']")
+2025-11-29 11:21:54 [INFO] automation - STT Edit clicked
+2025-11-29 11:21:54 [INFO] automation - STT toggled
+2025-11-29 11:21:54 [INFO] pages.base_page - Element visible: ('name', 'sampleHertz')
+2025-11-29 11:21:54 [INFO] pages.base_page - Element visible: ('name', 'sampleHertz')
+2025-11-29 11:21:54 [INFO] automation - Sample rate set: 16000
+2025-11-29 11:21:54 [INFO] automation - Engine selected: google
+2025-11-29 11:21:55 [INFO] automation - Key file uploaded
+2025-11-29 11:21:55 [INFO] pages.base_page - Element clickable: ('xpath', "//div[@id='media-configuration-call']//*[@id='stt-tab-call-pane']//button[@title='Save']")
+2025-11-29 11:21:55 [INFO] automation - STT Save clicked
+2025-11-29 11:21:55 [INFO] pages.common.loader - Waiting for loader to disappear...
+2025-11-29 11:21:55 [INFO] pages.base_page - Loader appeared.
+2025-11-29 11:22:01 [INFO] pages.base_page - Loader disappeared.
+2025-11-29 11:22:01 [INFO] pages.common.loader - Loader Stopped.
+2025-11-29 11:22:01 [INFO] pages.base_page - Element clickable: ('xpath', "//div[@id='media-configuration-call']//button[text()='Test']")
+2025-11-29 11:22:01 [INFO] automation - STT Test Clicked
+2025-11-29 11:22:01 [INFO] automation - Attempting to upload audio file.
+2025-11-29 11:22:01 [INFO] pages.base_page - Element visible: ('css selector', 'div[role="dialog"][aria-modal="true"]')
+2025-11-29 11:22:01 [INFO] automation - Modal dialog is visible.
+2025-11-29 11:22:18 [INFO] utils.screenshot - Screenshot saved: D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\screenshots\wait_until_clickable_error_div[role="dialog"][aria-modal="true"]__input[@name='audioFile' and @type='file']_20251129_112217.png
+2025-11-29 11:22:18 [ERROR] pages.base_page - wait_until_clickable failed for ('xpath', 'div[role="dialog"][aria-modal="true"]//input[@name=\'audioFile\' and @type=\'file\']'): Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x1184103
+	0x1184144
+	0xf8e71d
+	0xfda03d
+	0xfda41b
+	0x10217f2
+	0xffc954
+	0x101ee17
+	0xffc706
+	0xfcda30
+	0xfced54
+	0x13f57b4
+	0x13f098a
+	0x11ac392
+	0x119c4c8
+	0x11a324d
+	0x118c478
+	0x118c63c
+	0x11767ca
+	0x76155d49
+	0x76f6d6db
+	0x76f6d661
+Traceback (most recent call last):
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\pages\base_page.py", line 172, in _wait_for_condition
+    element = wait_obj.until(condition) # Use the passed wait_obj
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\selenium\webdriver\support\wait.py", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x1184103
+	0x1184144
+	0xf8e71d
+	0xfda03d
+	0xfda41b
+	0x10217f2
+	0xffc954
+	0x101ee17
+	0xffc706
+	0xfcda30
+	0xfced54
+	0x13f57b4
+	0x13f098a
+	0x11ac392
+	0x119c4c8
+	0x11a324d
+	0x118c478
+	0x118c63c
+	0x11767ca
+	0x76155d49
+	0x76f6d6db
+	0x76f6d661
+
+2025-11-29 11:22:18 [ERROR] automation - Audio file input field did not become clickable: Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x1184103
+	0x1184144
+	0xf8e71d
+	0xfda03d
+	0xfda41b
+	0x10217f2
+	0xffc954
+	0x101ee17
+	0xffc706
+	0xfcda30
+	0xfced54
+	0x13f57b4
+	0x13f098a
+	0x11ac392
+	0x119c4c8
+	0x11a324d
+	0x118c478
+	0x118c63c
+	0x11767ca
+	0x76155d49
+	0x76f6d6db
+	0x76f6d661
+Traceback (most recent call last):
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\pages\process\channel_config\call\call_stt_config.py", line 209, in upload_audio_file
+    input_el = self.wait_until_clickable(audio_input_locator_within_modal, timeout=15) # Further increased timeout
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\pages\base_page.py", line 59, in wait_until_clickable
+    return self._wait_for_condition(wait_obj, EC.element_to_be_clickable(locator), "clickable", locator)
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\pages\base_page.py", line 176, in _wait_for_condition
+    self._handle_error(f"wait_until_{name}", locator, e)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\pages\base_page.py", line 183, in _handle_error
+    raise error
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\pages\base_page.py", line 172, in _wait_for_condition
+    element = wait_obj.until(condition) # Use the passed wait_obj
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\selenium\webdriver\support\wait.py", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x1184103
+	0x1184144
+	0xf8e71d
+	0xfda03d
+	0xfda41b
+	0x10217f2
+	0xffc954
+	0x101ee17
+	0xffc706
+	0xfcda30
+	0xfced54
+	0x13f57b4
+	0x13f098a
+	0x11ac392
+	0x119c4c8
+	0x11a324d
+	0x118c478
+	0x118c63c
+	0x11767ca
+	0x76155d49
+	0x76f6d6db
+	0x76f6d661
+
+2025-11-29 11:22:18 [INFO] utils.screenshot - Screenshot saved: D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\screenshots\audio_input_not_clickable_20251129_112218.png
+2025-11-29 11:22:18 [ERROR] automation - Error configuring STT tab
+Traceback (most recent call last):
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\pages\process\channel_config\call\call_stt_config.py", line 270, in configure_stt
+    self.upload_audio_file()  # This now handles submitting the modal
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\pages\process\channel_config\call\call_stt_config.py", line 209, in upload_audio_file
+    input_el = self.wait_until_clickable(audio_input_locator_within_modal, timeout=15) # Further increased timeout
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\pages\base_page.py", line 59, in wait_until_clickable
+    return self._wait_for_condition(wait_obj, EC.element_to_be_clickable(locator), "clickable", locator)
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\pages\base_page.py", line 176, in _wait_for_condition
+    self._handle_error(f"wait_until_{name}", locator, e)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\pages\base_page.py", line 183, in _handle_error
+    raise error
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\pages\base_page.py", line 172, in _wait_for_condition
+    element = wait_obj.until(condition) # Use the passed wait_obj
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\selenium\webdriver\support\wait.py", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x1184103
+	0x1184144
+	0xf8e71d
+	0xfda03d
+	0xfda41b
+	0x10217f2
+	0xffc954
+	0x101ee17
+	0xffc706
+	0xfcda30
+	0xfced54
+	0x13f57b4
+	0x13f098a
+	0x11ac392
+	0x119c4c8
+	0x11a324d
+	0x118c478
+	0x118c63c
+	0x11767ca
+	0x76155d49
+	0x76f6d6db
+	0x76f6d661
+
+2025-11-29 11:22:18 [INFO] test_cases.process.channel_config.test_call_config_stt - Logging out...
+2025-11-29 11:22:18 [INFO] pages.common.loader - Waiting for loader to disappear...
+2025-11-29 11:22:23 [INFO] pages.base_page - Loader was not observed during initial check, proceeding without waiting for invisibility.
+2025-11-29 11:22:23 [INFO] pages.common.loader - Loader Stopped.
+2025-11-29 11:22:23 [INFO] pages.base_page - Element clickable: ('xpath', "//img[@alt='Profile']")
+2025-11-29 11:22:24 [INFO] utils.screenshot - Screenshot saved: D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\screenshots\click_error___img[@alt='Profile']_20251129_112224.png
+2025-11-29 11:22:24 [ERROR] pages.base_page - click failed for ('xpath', "//img[@alt='Profile']"): Message: element click intercepted: Element <img src="/play/static/media/prof1.4b6632204fcdaa77a79183f5ab8c5710.svg" alt="Profile"> is not clickable at point (1573, 21). Other element would receive the click: <div role="dialog" aria-modal="true" class="fade modal show" tabindex="-1" style="display: block;">...</div>
+  (Session info: chrome=142.0.7444.176); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementclickinterceptedexception
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x1184103
+	0x1184144
+	0xf8e71d
+	0xfe0580
+	0xfde8e3
+	0xfdc387
+	0xfdb5fd
+	0xfcfd65
+	0xffc90c
+	0xfcf7c4
+	0xffcac4
+	0x101ee17
+	0xffc706
+	0xfcda30
+	0xfced54
+	0x13f57b4
+	0x13f098a
+	0x11ac392
+	0x119c4c8
+	0x11a324d
+	0x118c478
+	0x118c63c
+	0x11767ca
+	0x76155d49
+	0x76f6d6db
+	0x76f6d661
+Traceback (most recent call last):
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\pages\base_page.py", line 24, in click
+    element.click()
+    ~~~~~~~~~~~~~^^
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 119, in click
+    self._execute(Command.CLICK_ELEMENT)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 572, in _execute
+    return self._parent.execute(command, params)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 458, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 233, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.ElementClickInterceptedException: Message: element click intercepted: Element <img src="/play/static/media/prof1.4b6632204fcdaa77a79183f5ab8c5710.svg" alt="Profile"> is not clickable at point (1573, 21). Other element would receive the click: <div role="dialog" aria-modal="true" class="fade modal show" tabindex="-1" style="display: block;">...</div>
+  (Session info: chrome=142.0.7444.176); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementclickinterceptedexception
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x1184103
+	0x1184144
+	0xf8e71d
+	0xfe0580
+	0xfde8e3
+	0xfdc387
+	0xfdb5fd
+	0xfcfd65
+	0xffc90c
+	0xfcf7c4
+	0xffcac4
+	0x101ee17
+	0xffc706
+	0xfcda30
+	0xfced54
+	0x13f57b4
+	0x13f098a
+	0x11ac392
+	0x119c4c8
+	0x11a324d
+	0x118c478
+	0x118c63c
+	0x11767ca
+	0x76155d49
+	0x76f6d6db
+	0x76f6d661
+
+--- Logging error ---
+Traceback (most recent call last):
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\pages\login\logout.py", line 26, in logout
+    self.click(self.PROFILE_ICON)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\pages\base_page.py", line 27, in click
+    self._handle_error("click", locator, e)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\pages\base_page.py", line 183, in _handle_error
+    raise error
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\pages\base_page.py", line 24, in click
+    element.click()
+    ~~~~~~~~~~~~~^^
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 119, in click
+    self._execute(Command.CLICK_ELEMENT)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 572, in _execute
+    return self._parent.execute(command, params)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 458, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 233, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.ElementClickInterceptedException: Message: element click intercepted: Element <img src="/play/static/media/prof1.4b6632204fcdaa77a79183f5ab8c5710.svg" alt="Profile"> is not clickable at point (1573, 21). Other element would receive the click: <div role="dialog" aria-modal="true" class="fade modal show" tabindex="-1" style="display: block;">...</div>
+  (Session info: chrome=142.0.7444.176); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementclickinterceptedexception
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x1184103
+	0x1184144
+	0xf8e71d
+	0xfe0580
+	0xfde8e3
+	0xfdc387
+	0xfdb5fd
+	0xfcfd65
+	0xffc90c
+	0xfcf7c4
+	0xffcac4
+	0x101ee17
+	0xffc706
+	0xfcda30
+	0xfced54
+	0x13f57b4
+	0x13f098a
+	0x11ac392
+	0x119c4c8
+	0x11a324d
+	0x118c478
+	0x118c63c
+	0x11767ca
+	0x76155d49
+	0x76f6d6db
+	0x76f6d661
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python313\Lib\logging\handlers.py", line 79, in emit
+    if self.shouldRollover(record):
+       ~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\User\AppData\Local\Programs\Python\Python313\Lib\logging\handlers.py", line 203, in shouldRollover
+    msg = "%s\n" % self.format(record)
+                   ~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\User\AppData\Local\Programs\Python\Python313\Lib\logging\__init__.py", line 999, in format
+    return fmt.format(record)
+           ~~~~~~~~~~^^^^^^^^
+  File "C:\Users\User\AppData\Local\Programs\Python\Python313\Lib\logging\__init__.py", line 712, in format
+    record.message = record.getMessage()
+                     ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\User\AppData\Local\Programs\Python\Python313\Lib\logging\__init__.py", line 400, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Scripts\pytest.exe\__main__.py", line 7, in <module>
+    sys.exit(console_main())
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\_pytest\config\__init__.py", line 221, in console_main
+    code = main()
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\_pytest\config\__init__.py", line 197, in main
+    ret: ExitCode | int = config.hook.pytest_cmdline_main(config=config)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\pluggy\_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\pluggy\_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\pluggy\_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\_pytest\main.py", line 365, in pytest_cmdline_main
+    return wrap_session(config, _main)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\_pytest\main.py", line 318, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\_pytest\main.py", line 372, in _main
+    config.hook.pytest_runtestloop(session=session)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\pluggy\_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\pluggy\_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\pluggy\_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\_pytest\main.py", line 396, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\pluggy\_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\pluggy\_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\pluggy\_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\_pytest\runner.py", line 118, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\_pytest\runner.py", line 137, in runtestprotocol
+    reports.append(call_and_report(item, "call", log))
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\_pytest\runner.py", line 244, in call_and_report
+    call = CallInfo.from_call(
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\_pytest\runner.py", line 353, in from_call
+    result: TResult | None = func()
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\_pytest\runner.py", line 245, in <lambda>
+    lambda: runtest_hook(item=item, **kwds),
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\pluggy\_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\pluggy\_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\pluggy\_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\_pytest\runner.py", line 179, in pytest_runtest_call
+    item.runtest()
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\_pytest\python.py", line 1720, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\pluggy\_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\pluggy\_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\pluggy\_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\_pytest\python.py", line 166, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\test_cases\process\channel_config\test_call_config_stt.py", line 74, in test_filter_process_by_name
+    logout.logout()
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\pages\login\logout.py", line 36, in logout
+    logger.error("Failed to logout: {e}",e)
+Message: 'Failed to logout: {e}'
+Arguments: (ElementClickInterceptedException(),)
+--- Logging error ---
+Traceback (most recent call last):
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\pages\login\logout.py", line 26, in logout
+    self.click(self.PROFILE_ICON)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\pages\base_page.py", line 27, in click
+    self._handle_error("click", locator, e)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\pages\base_page.py", line 183, in _handle_error
+    raise error
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\pages\base_page.py", line 24, in click
+    element.click()
+    ~~~~~~~~~~~~~^^
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 119, in click
+    self._execute(Command.CLICK_ELEMENT)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 572, in _execute
+    return self._parent.execute(command, params)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 458, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 233, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.ElementClickInterceptedException: Message: element click intercepted: Element <img src="/play/static/media/prof1.4b6632204fcdaa77a79183f5ab8c5710.svg" alt="Profile"> is not clickable at point (1573, 21). Other element would receive the click: <div role="dialog" aria-modal="true" class="fade modal show" tabindex="-1" style="display: block;">...</div>
+  (Session info: chrome=142.0.7444.176); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementclickinterceptedexception
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x1184103
+	0x1184144
+	0xf8e71d
+	0xfe0580
+	0xfde8e3
+	0xfdc387
+	0xfdb5fd
+	0xfcfd65
+	0xffc90c
+	0xfcf7c4
+	0xffcac4
+	0x101ee17
+	0xffc706
+	0xfcda30
+	0xfced54
+	0x13f57b4
+	0x13f098a
+	0x11ac392
+	0x119c4c8
+	0x11a324d
+	0x118c478
+	0x118c63c
+	0x11767ca
+	0x76155d49
+	0x76f6d6db
+	0x76f6d661
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python313\Lib\logging\__init__.py", line 1151, in emit
+    msg = self.format(record)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python313\Lib\logging\__init__.py", line 999, in format
+    return fmt.format(record)
+           ~~~~~~~~~~^^^^^^^^
+  File "C:\Users\User\AppData\Local\Programs\Python\Python313\Lib\logging\__init__.py", line 712, in format
+    record.message = record.getMessage()
+                     ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\User\AppData\Local\Programs\Python\Python313\Lib\logging\__init__.py", line 400, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Scripts\pytest.exe\__main__.py", line 7, in <module>
+    sys.exit(console_main())
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\_pytest\config\__init__.py", line 221, in console_main
+    code = main()
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\_pytest\config\__init__.py", line 197, in main
+    ret: ExitCode | int = config.hook.pytest_cmdline_main(config=config)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\pluggy\_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\pluggy\_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\pluggy\_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\_pytest\main.py", line 365, in pytest_cmdline_main
+    return wrap_session(config, _main)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\_pytest\main.py", line 318, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\_pytest\main.py", line 372, in _main
+    config.hook.pytest_runtestloop(session=session)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\pluggy\_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\pluggy\_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\pluggy\_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\_pytest\main.py", line 396, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\pluggy\_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\pluggy\_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\pluggy\_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\_pytest\runner.py", line 118, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\_pytest\runner.py", line 137, in runtestprotocol
+    reports.append(call_and_report(item, "call", log))
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\_pytest\runner.py", line 244, in call_and_report
+    call = CallInfo.from_call(
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\_pytest\runner.py", line 353, in from_call
+    result: TResult | None = func()
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\_pytest\runner.py", line 245, in <lambda>
+    lambda: runtest_hook(item=item, **kwds),
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\pluggy\_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\pluggy\_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\pluggy\_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\_pytest\runner.py", line 179, in pytest_runtest_call
+    item.runtest()
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\_pytest\python.py", line 1720, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\pluggy\_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\pluggy\_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\pluggy\_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\.venv\Lib\site-packages\_pytest\python.py", line 166, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\test_cases\process\channel_config\test_call_config_stt.py", line 74, in test_filter_process_by_name
+    logout.logout()
+  File "D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\pages\login\logout.py", line 36, in logout
+    logger.error("Failed to logout: {e}",e)
+Message: 'Failed to logout: {e}'
+Arguments: (ElementClickInterceptedException(),)
+2025-11-29 11:22:25 [INFO] test_cases.process.channel_config.test_call_config_stt - Logout complete. Test finished.

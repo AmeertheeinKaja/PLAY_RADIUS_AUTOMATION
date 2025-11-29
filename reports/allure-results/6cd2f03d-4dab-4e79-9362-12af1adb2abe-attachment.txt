@@ -1,0 +1,90 @@
+2025-11-29 11:45:21 [INFO] pages.base_page - Page fully loaded.
+2025-11-29 11:45:21 [INFO] pages.login.login - Opening: https://qaradius.in.qamajor.radius-ois.ai/play/login
+2025-11-29 11:45:21 [INFO] pages.base_page - Element visible: ('id', 'loginForm.username')
+2025-11-29 11:45:21 [INFO] pages.base_page - Element visible: ('id', 'password')
+2025-11-29 11:45:21 [INFO] pages.base_page - Element visible: ('id', 'loginForm.Login')
+2025-11-29 11:45:21 [INFO] pages.login.login - Login submitted for user: playadmin
+2025-11-29 11:45:21 [INFO] pages.common.loader - Waiting for loader to disappear...
+2025-11-29 11:45:22 [INFO] pages.base_page - Loader appeared.
+2025-11-29 11:45:30 [INFO] pages.base_page - Loader disappeared.
+2025-11-29 11:45:30 [INFO] pages.common.loader - Loader Stopped.
+2025-11-29 11:45:30 [INFO] pages.login.login - Login submitted successfully.
+2025-11-29 11:45:30 [INFO] utils.screenshot - Screenshot saved: D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\screenshots\Login Submitted successfully_20251129_114530.png
+2025-11-29 11:45:30 [INFO] pages.common.loader - Waiting for loader to disappear...
+2025-11-29 11:45:35 [INFO] pages.base_page - Loader was not observed during initial check, proceeding without waiting for invisibility.
+2025-11-29 11:45:35 [INFO] pages.common.loader - Loader Stopped.
+2025-11-29 11:45:35 [INFO] pages.base_page - Element clickable: ('xpath', "//button[@title='Filter']")
+2025-11-29 11:45:35 [INFO] pages.base_page - Filter UI ready.
+2025-11-29 11:45:35 [INFO] pages.filtering.filter_checker - 🔍 Expected active filters from JSON: ['Contact Address', 'Interaction Type', 'Process Code']
+2025-11-29 11:45:35 [INFO] pages.filtering.filter_checker - ✅ Active filter visible in UI: Contact Address
+2025-11-29 11:45:35 [INFO] pages.filtering.filter_checker - ✅ Active filter visible in UI: Interaction Type
+2025-11-29 11:45:40 [WARNING] pages.filtering.filter_checker - ❌ Missing active filter in UI: Process Code
+2025-11-29 11:45:40 [INFO] pages.filtering.filter_checker - 🚫 Missing active filters: ['Process Code']
+2025-11-29 11:45:40 [INFO] pages.filtering.filter_record_by_attribute - DEBUG STEP 1: Filters returned from checker: ['Process Code']
+2025-11-29 11:45:40 [INFO] pages.filtering.filter_record_by_attribute - ⚙️ Final filters to enable (Mapped): ['Process Code']
+2025-11-29 11:45:40 [INFO] pages.common.sidemenupage - 🧭 Attempting to open Configuration page...
+2025-11-29 11:45:40 [INFO] pages.base_page - Element clickable: ('xpath', "//button[@title='Configurations']")
+2025-11-29 11:45:41 [INFO] pages.common.sidemenupage - ✅ Configuration button clicked.
+2025-11-29 11:45:41 [INFO] pages.common.loader - Waiting for loader to disappear...
+2025-11-29 11:45:46 [INFO] pages.base_page - Loader was not observed during initial check, proceeding without waiting for invisibility.
+2025-11-29 11:45:46 [INFO] pages.common.loader - Loader Stopped.
+2025-11-29 11:45:46 [INFO] utils.screenshot - Screenshot saved: D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\screenshots\Configuration button clicked_20251129_114546.png
+2025-11-29 11:45:46 [INFO] pages.base_page - Element clickable: ('xpath', "//*[@id='root']/div[2]/div/div[3]/div/div/div/div/form[1]/div[6]/div[2]/div/button")
+2025-11-29 11:45:46 [INFO] pages.record_attributes.edit_filter_attribute - Edit button is clicked
+2025-11-29 11:45:46 [INFO] pages.base_page - Element clickable: ('xpath', "(//form[@class='needs-validation'])[1]//span[normalize-space(text())='Process Code']")
+2025-11-29 11:45:46 [INFO] pages.record_attributes.enable_filter_attribute - Enabled attribute: Process Code
+2025-11-29 11:45:47 [INFO] pages.base_page - Element clickable: ('xpath', "//button[text()='Update']")
+2025-11-29 11:45:47 [INFO] pages.record_attributes.enable_filter_attribute - attribute updated
+2025-11-29 11:45:47 [INFO] pages.common.sidemenupage - 🔄 Attempting to open 'All Records' section...
+2025-11-29 11:45:47 [INFO] pages.base_page - Element clickable: ('xpath', "//button[@title='Records']")
+2025-11-29 11:45:47 [INFO] pages.common.sidemenupage - ✅ 'All Records' button clicked.
+2025-11-29 11:45:47 [INFO] pages.common.loader - Waiting for loader to disappear...
+2025-11-29 11:45:52 [INFO] pages.base_page - Loader was not observed during initial check, proceeding without waiting for invisibility.
+2025-11-29 11:45:52 [INFO] pages.common.loader - Loader Stopped.
+2025-11-29 11:45:52 [INFO] pages.base_page - Element visible: ('xpath', '//table//tr')
+2025-11-29 11:45:52 [INFO] pages.common.sidemenupage - ✅ 'All Records' view opened successfully.
+2025-11-29 11:45:52 [INFO] utils.screenshot - Screenshot saved: D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\screenshots\All Records view opened successfully_20251129_114552.png
+2025-11-29 11:45:52 [INFO] pages.base_page - Element clickable: ('xpath', "//button[@title='Filter']")
+2025-11-29 11:45:52 [INFO] pages.base_page - Filter UI ready.
+2025-11-29 11:45:52 [INFO] pages.filtering.filter_record_by_attribute - ✅ Missing filters enabled and UI refreshed successfully.
+2025-11-29 11:45:52 [INFO] pages.filtering.filter_record_by_attribute - 🔍 Checking filter availability for: Contact Address
+2025-11-29 11:45:52 [INFO] pages.filtering.filter_record_by_attribute - DEBUG STEP 3: Checking filter availability for: Contact Address
+2025-11-29 11:45:52 [INFO] pages.base_page - Element visible: ('id', 'attributeValue_contactaddress')
+2025-11-29 11:45:53 [INFO] pages.filtering.filter_record_by_attribute - ✏️ Entered '6746663948' in Contact Address
+2025-11-29 11:45:53 [INFO] pages.filtering.filter_record_by_attribute - 🔍 Checking filter availability for: Interaction Type
+2025-11-29 11:45:53 [INFO] pages.filtering.filter_record_by_attribute - DEBUG STEP 3: Checking filter availability for: Interaction Type
+2025-11-29 11:45:53 [INFO] pages.common.loader - Waiting for loader to disappear...
+2025-11-29 11:45:58 [INFO] pages.base_page - Loader was not observed during initial check, proceeding without waiting for invisibility.
+2025-11-29 11:45:58 [INFO] pages.common.loader - Loader Stopped.
+2025-11-29 11:45:58 [INFO] pages.base_page - Element visible: ('xpath', "//select[@id='attributeValue_xsesstype']")
+2025-11-29 11:45:58 [INFO] pages.filtering.filter_by_select - Interaction Type dropdown visible
+2025-11-29 11:45:58 [INFO] pages.filtering.filter_by_select - Selecting Interaction Type: ib
+2025-11-29 11:45:58 [INFO] pages.filtering.filter_by_select - Successfully selected Interaction Type: ib
+2025-11-29 11:45:58 [INFO] pages.filtering.filter_record_by_attribute - 🔍 Checking filter availability for: Process Code
+2025-11-29 11:45:58 [INFO] pages.filtering.filter_record_by_attribute - DEBUG STEP 3: Checking filter availability for: Process Code
+2025-11-29 11:45:58 [INFO] pages.base_page - Element visible: ('id', 'attributeValue_campaign')
+2025-11-29 11:45:59 [INFO] pages.filtering.filter_record_by_attribute - ✏️ Entered 'RADIUS_OIS' in Process Code
+2025-11-29 11:45:59 [INFO] pages.base_page - Element clickable: ('xpath', "//button[normalize-space(text())='Search']")
+2025-11-29 11:45:59 [INFO] pages.common.loader - Waiting for loader to disappear...
+2025-11-29 11:45:59 [INFO] pages.base_page - Loader appeared.
+2025-11-29 11:46:04 [INFO] pages.base_page - Loader disappeared.
+2025-11-29 11:46:04 [INFO] pages.common.loader - Loader Stopped.
+2025-11-29 11:46:04 [INFO] pages.common.submit_search_filter - Searching
+2025-11-29 11:46:04 [INFO] pages.base_page - Element clickable: ('xpath', "//button[@title='Filter']")
+2025-11-29 11:46:05 [INFO] pages.base_page - Filter UI ready.
+2025-11-29 11:46:05 [INFO] pages.base_page - Element clickable: ('xpath', "//button[normalize-space(text())='Search']")
+2025-11-29 11:46:05 [INFO] pages.common.loader - Waiting for loader to disappear...
+2025-11-29 11:46:05 [INFO] pages.base_page - Loader appeared.
+2025-11-29 11:46:10 [INFO] pages.base_page - Loader disappeared.
+2025-11-29 11:46:10 [INFO] pages.common.loader - Loader Stopped.
+2025-11-29 11:46:10 [INFO] pages.common.submit_search_filter - Searching
+2025-11-29 11:46:10 [INFO] pages.common.loader - Waiting for loader to disappear...
+2025-11-29 11:46:15 [INFO] pages.base_page - Loader was not observed during initial check, proceeding without waiting for invisibility.
+2025-11-29 11:46:15 [INFO] pages.common.loader - Loader Stopped.
+2025-11-29 11:46:16 [INFO] pages.base_page - Element clickable: ('xpath', "//img[@alt='Profile']")
+2025-11-29 11:46:16 [INFO] pages.base_page - Clicked element: ('xpath', "//img[@alt='Profile']")
+2025-11-29 11:46:16 [INFO] pages.base_page - Element clickable: ('xpath', "//button[@title='Logout']")
+2025-11-29 11:46:16 [INFO] pages.base_page - Clicked element: ('xpath', "//button[@title='Logout']")
+2025-11-29 11:46:16 [INFO] pages.login.logout - Logout Successfully.
+2025-11-29 11:46:18 [INFO] utils.screenshot - Screenshot saved: D:\2025\SELENIUM-PYTHON\PLAY_RADIUS_AUTOMATION\screenshots\Logout_Successfully_20251129_114616.png
+2025-11-29 11:46:18 [INFO] pages.base_page - Element visible: ('xpath', "//span[text()='Login']")
