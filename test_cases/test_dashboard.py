@@ -2,6 +2,7 @@ import pytest
 from selenium.webdriver.common.by import By
 
 from pages.login.login import LoginPage
+from pages.login.logout import Logout
 from pages.dashboard.dashboard_page import DashboardPage
 from pages.common.loader import Loader
 
@@ -13,6 +14,7 @@ class TestDashboard:
         dashboard = DashboardPage(driver_function)
         loader = Loader(driver_function)
 
+
         # Step 1: Open login page and login
         login_page.open()
         login_page.login()
@@ -23,6 +25,8 @@ class TestDashboard:
         # Step 3: Open Bulk Download tab
         dashboard.open_bulk_download()
 
+
+
         # Step 4: Verify tab loaded
         assert "Bulk" in driver_function.page_source, "Bulk Download tab content not loaded properly."
 
@@ -31,10 +35,12 @@ class TestDashboard:
         dashboard = DashboardPage(driver_function)
         loader = Loader(driver_function)
 
+
         login_page.open()
         login_page.login()
         loader.load()
         dashboard.open_all_records()
+
 
         assert "All Records" in driver_function.page_source or "Recording List" in driver_function.title, \
             "All Records tab content not loaded properly."
@@ -44,10 +50,12 @@ class TestDashboard:
         dashboard = DashboardPage(driver_function)
         loader = Loader(driver_function)
 
+
         login_page.open()
         login_page.login()
         loader.load()
         dashboard.open_closed_records()
+
 
         assert "Closed" in driver_function.page_source, "Closed Records tab content not loaded properly."
 
@@ -61,8 +69,13 @@ class TestDashboard:
         loader.load()
 
         dashboard.open_all_records()
+        loader.load()
+
         dashboard.open_closed_records()
+        loader.load()
+
         dashboard.open_bulk_download()
+        loader.load()
 
         assert "Bulk" in driver_function.page_source, "Failed to switch tabs properly."
 
@@ -71,6 +84,7 @@ class TestDashboard:
         login_page = LoginPage(driver_function)
         dashboard = DashboardPage(driver_function)
         loader = Loader(driver_function)
+
 
         # Step 1: Login
         login_page.open()
@@ -89,10 +103,13 @@ class TestDashboard:
         )
         print(f" Active tab highlight verified: {active_tab_id}")
 
+
+
     def test_loader_behavior_on_tab_change(self, driver_function):
         login_page = LoginPage(driver_function)
         dashboard = DashboardPage(driver_function)
         loader = Loader(driver_function)
+
 
         login_page.open()
         login_page.login()
@@ -100,6 +117,7 @@ class TestDashboard:
 
         dashboard.open_bulk_download()
         loader.load()  # Confirm loader disappears
+
 
     def test_invalid_tab_name_raises_error(self, driver_function):
         dashboard = DashboardPage(driver_function)
@@ -109,7 +127,9 @@ class TestDashboard:
     def test_dashboard_widgets_present(self, driver_function):
         login_page = LoginPage(driver_function)
         dashboard = DashboardPage(driver_function)
+
         login_page.open()
         login_page.login()
+
 
         assert driver_function.find_element(By.ID, "pills-allrec-tab"), "Dashboard tabs not visible after login."

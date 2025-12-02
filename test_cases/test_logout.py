@@ -6,13 +6,13 @@ from utils.logger import get_logger
 
 logger = get_logger(__name__)
 
-@pytest.mark.usefixtures("driver_session")
+@pytest.mark.usefixtures("driver_function")
 class TestLogout:
-    def test_logout_successful(self,driver_session):
+    def test_logout_successful(self,driver_function):
         """Verify that login is successful and redirected to expected URL."""
         try:
-            login_page = LoginPage(driver_session)
-            logout_page = Logout(driver_session)
+            login_page = LoginPage(driver_function)
+            logout_page = Logout(driver_function)
             login_page.open()
             login_page.login()
             logout_page.logout()

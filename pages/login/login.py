@@ -14,7 +14,7 @@ class LoginPage(BasePage):
     PASSWORD = (By.ID, "password")
     LOGIN_BTN = (By.ID, "loginForm.Login")
     DASHBOARD_UI=(By.XPATH,"//button[@title='Play']")
-    ERROR_LOCATOR = (By.XPATH, "//*[@id='root']/div[2]/div/div/div/div[2]/div/div/div/span")
+    ERROR_LOCATOR = (By.XPATH, "//span[contains(@class, 'msg') and contains(text(), 'Incorrect loginid or password.')]")
     ERROR_MESSAGE="Incorrect loginid or password."
     NETWORK_ERROR=(By.XPATH,"//*[@id='root']/div[2]/div/div/div/div[2]/div/div/div/span")
 

@@ -15,37 +15,43 @@ logger = get_logger(__name__)
 
 class EnableFilterAttribute(BasePage):
 
-
-
-
-
-    def enable(self,attrList):
+    def enable(self, attrList):
         try:
-            UPDATE_BTN =(By.XPATH,"//button[text()='Update']")
-            # loader = Loader(driver)
-            # loader.load()
+            UPDATE_BTN = (By.XPATH, "//button[text()='Update']")
 
             for attr in attrList:
-                ENABLE_ATTR = (
+                # Find span first
+                ATTR_SPAN = (
                     By.XPATH,
                     f"(//form[@class='needs-validation'])[1]//span[normalize-space(text())='{attr}']"
                 )
-                try:
-                    attr_button = self.wait_until_clickable(ENABLE_ATTR)
-                    attr_button.click()
+
+                span_el = self.wait_until_visible(ATTR_SPAN)
+
+                # From span, go up to label, then get its "for" attribute
+                label_el = span_el.find_element(By.XPATH, "./ancestor::label")
+                checkbox_id = label_el.get_attribute("for")
+
+                # Now find the actual checkbox <input>
+                CHECKBOX = (By.ID, checkbox_id)
+                checkbox_el = self.driver.find_element(*CHECKBOX)
+
+                if not checkbox_el.is_selected():
+                    # ONLY click if not selected
+                    label_el.click()
                     logger.info(f"Enabled attribute: {attr}")
-                    time.sleep(0.5)
-                except Exception as inner_e:
-                    logger.warning(f"Attribute '{attr}' not found or not clickable: {inner_e}")
+                    time.sleep(0.3)
+                else:
+                    logger.info(f"{attr} is already enabled. Skipping...")
+
             update_button = self.wait_until_clickable(UPDATE_BTN)
             update_button.click()
-
-            print("attribute updated ")
+            print("attribute updated")
             logger.info("attribute updated")
 
         except Exception as e:
-            print("Error during clicking Filter update",e)
-            logger.error("Error during clicking Filter update",e)
+            print("Error during clicking Filter update", e)
+            logger.error("Error during clicking Filter update", e)
 
     def enableSingleAttribute(self,attributeName):
         try:

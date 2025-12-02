@@ -11,3 +11,10 @@ def load_test_data(filename):
 
     with open(file_path, "r", encoding="utf-8") as file:
         return json.load(file)
+
+
+def generate_process_details(base_code, base_name, number):
+    return {
+        "process_code": f"{base_code}{number}",
+        "process_name": f"{base_name}{number}"
+    }

@@ -5,18 +5,18 @@ from utils.logger import get_logger
 
 logger = get_logger(__name__)
 
-@pytest.mark.usefixtures("driver_session")
+@pytest.mark.usefixtures("driver_function")
 class TestLogin:
-    def test_login_successful(self,driver_session):
+    def test_login_successful(self,driver_function):
         """Verify that login is successful and redirected to expected URL."""
         try:
-            login_page = LoginPage(driver_session)
+            login_page = LoginPage(driver_function)
             login_page.open()
             login_page.login()
 
 
             expected_substring = "/recording-list/all-records"
-            current_url = driver_session.current_url
+            current_url = driver_function.current_url
 
 
             assert expected_substring in current_url, (

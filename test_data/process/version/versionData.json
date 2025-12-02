@@ -1,0 +1,22 @@
+{
+  "new": {
+    "name": "version_",
+    "interaction": "ib"
+  },
+  "import": {
+    "process_name": "smk_play_oct28_a",
+    "version": "Version10",
+    "name": "version_01_1x",
+    "interaction": "ob"
+  },
+  "copy": {
+    "version": "version_06",
+    "name": "version_06_copy",
+    "interaction": "ob"
+  },
+  "edit": {
+    "version": "version_24",
+    "name": "version_01_01",
+    "interaction": "ob"
+  }
+}
