@@ -3,9 +3,9 @@ from pages.base_page import BasePage
 from pages.common.loader import Loader
 from utils.logger import get_logger
 from utils.screenshot import Screenshot
-from utils.data_reader import load_test_data
 
-full_config = load_test_data("processData.json")
+
+
 logger = get_logger(__name__)
 
 
@@ -23,6 +23,7 @@ class CallStorageConfig(BasePage):
 
     # HTTP fields
     STORAGE_HTTP_URL = (By.XPATH, f"{CALL_CONFIG_SCOPE}//input[@name='dirPath']")
+    STORAGE_HTTP_SUCCESS="Channel updated successfully"
 
     # SFTP fields
     STORAGE_SFTP_HOSTNAME = (By.XPATH, f"{CALL_CONFIG_SCOPE}//input[@name='host']")
@@ -44,61 +45,44 @@ class CallStorageConfig(BasePage):
     STORAGE_EDIT_BTN  = (By.XPATH, f"{CALL_CONFIG_SCOPE}//button[@title='Edit']")
     STORAGE_TEST_BTN  = (By.XPATH, f"{CALL_CONFIG_SCOPE}//button[@title='Test Connection']")
 
+
+
+
+
     def __init__(self, driver):
         super().__init__(driver)
         self.loader = Loader(driver)
 
-        call_config = full_config.get("channel_config", {}).get("call", {})
-        storage = call_config.get("storage", {})
-
-        # Storage Type
-        self.storage_type = storage.get("type", "")
-
-        # HTTP
-        self.httpurl = storage.get("http", {}).get("domain_url", "")
-
-        # SFTP
-        sftp = storage.get("sftp", {})
-        self.sftp_host = sftp.get("hostName", "")
-        self.sftp_port = str(sftp.get("port", ""))
-        self.sftp_username = sftp.get("username", "")
-        self.sftp_password = sftp.get("password", "")
-        self.sftp_dir_path = sftp.get("dir_path", "")
-
-        # FTP
-        ftp = storage.get("ftp", {})
-        self.ftp_host = ftp.get("hostName", "")
-        self.ftp_port = str(ftp.get("port", ""))
-        self.ftp_username = ftp.get("username", "")
-        self.ftp_password = ftp.get("password", "")
-        self.ftp_dir_path = ftp.get("dir_path", "")
-
     # ----------------------------------------------------
     # STORAGE MAIN ENTRY
     # ----------------------------------------------------
-    def storage_config(self):
-        self.storage_tab()
+    def storage_config(self, storage_data):
+        storage_type = storage_data.get("type", "").lower()
 
-        if not self.storage_type:
-            logger.warning("Storage type missing in JSON")
-            return
+        if storage_type == "http":
+            self.http_config(storage_data.get("http", {}))
+        elif storage_type == "sftp":
+            self.sftp_config(storage_data.get("sftp", {}))
+        elif storage_type == "ftp":
+            self.ftp_config(storage_data.get("ftp", {}))
 
-        t = self.storage_type.lower()
-        logger.info(f"Configuring storage type: {t}")
+    def edit_storage_config(self, storage_data):
+        storage_type = storage_data.get("type", "").lower()
+        self.click_edit()
+        if storage_type == "http":
+            self.http_config(storage_data.get("http", {}))
+        elif storage_type == "sftp":
+            self.sftp_config(storage_data.get("sftp", {}))
+        elif storage_type == "ftp":
+            self.ftp_config(storage_data.get("ftp", {}))
 
-        if t == "http":
-            self.http_config()
-        elif t == "sftp":
-            self.sftp_config()
-        elif t == "ftp":
-            self.ftp_config()
-        else:
-            logger.warning(f"Unknown storage type: {t}")
+
 
     # ----------------------------------------------------
     # HTTP STORAGE CONFIG
     # ----------------------------------------------------
-    def http_config(self):
+    def http_config(self,http_data):
+        self.httpurl = http_data.get("domain_url","")
         try:
             self.http()
             field = self.driver.find_element(*self.STORAGE_HTTP_URL)
@@ -116,7 +100,12 @@ class CallStorageConfig(BasePage):
     # ----------------------------------------------------
     # SFTP STORAGE CONFIG
     # ----------------------------------------------------
-    def sftp_config(self):
+    def sftp_config(self,sftp_data):
+        self.sftp_host = sftp_data.get("hostName","")
+        self.sftp_port = sftp_data.get("port","")
+        self.sftp_username = sftp_data.get("username","")
+        self.sftp_password = sftp_data.get("password","")
+        self.sftp_dir_path = sftp_data.get("dirPath","")
         try:
             self.sftp()
 
@@ -139,7 +128,12 @@ class CallStorageConfig(BasePage):
     # ----------------------------------------------------
     # FTP STORAGE CONFIG
     # ----------------------------------------------------
-    def ftp_config(self):
+    def ftp_config(self,ftp_data):
+        self.ftp_host = ftp_data.get("hostName","")
+        self.ftp_port = ftp_data.get("port","")
+        self.ftp_username = ftp_data.get("username","")
+        self.ftp_password = ftp_data.get("password","")
+        self.ftp_dir_path = ftp_data.get("dirPath","")
         try:
             self.ftp()
 

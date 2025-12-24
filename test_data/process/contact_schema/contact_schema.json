@@ -1,0 +1,24 @@
+{
+  "mode": "manualmode",
+  "fields": [
+    {
+      "fieldName": "contact_name",
+      "dataType": "String"
+    },
+    {
+      "fieldName": "is_active",
+      "dataType": "Boolean"
+    }
+
+  ],
+  "fieldOptions": [
+    "Integer",
+    "Double",
+    "Boolean",
+    "String",
+    "Date",
+    "Time",
+    "DateTime"
+  ],
+  "filePath": "D:\\2025\\68ad48afb718f2a516d66ac2_SMK_PLAY_OCT28_A.csv"
+}

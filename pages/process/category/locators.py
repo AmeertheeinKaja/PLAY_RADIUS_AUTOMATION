@@ -1,0 +1,23 @@
+from selenium.webdriver.common.by import By
+
+class VersionPageLocators:
+    CATEGORY_BASIC = (By.XPATH, "//button[@title='Close']")
+    ADD_CATEGORY_VERSION_BTN = (By.XPATH, "//button[@title='Add Category/Edit Version']")
+    EDIT_CATEGORY_VERSION_BTN = (By.XPATH, "//*[@id='root']/div[2]/div/div[3]/div/div/div[2]/div/div[2]/div/div[1]/div/div/div[2]/div[2]/div[1]/button")
+    PUBLISH_CATEGORY_VERSION_BTN = (By.XPATH, "//button[@title='Publish Version']")
+    DELETE_CATEGORY_VERSION_BTN = (By.XPATH, "//button[@title='Delete Version']")
+    EDIT_VERSION_NAME = (By.XPATH, "//input[@name='versionName']")
+    CATEGORY_NAME_INPUT = (By.XPATH, "//input[@name='categoryName']")
+    CATEGORY_WEIGHTAGE_INPUT = (By.XPATH, "//div[@class='plver_box_header']//input[@name='weightage']")
+    ADD_CATEGORY_BTN = (By.XPATH, "//span[@title='Add Category']")
+    QUESTION_CODE_INPUT = (By.XPATH, "//input[@name='questionCode']")
+    QUESTION_TEXT_INPUT = (By.XPATH, "//input[@name='questionText']")
+    RATING_TYPE_SELECT = (By.XPATH, "//Select[@name='answerType']")
+    QUESTION_WEIGHTAGE_INPUT = (By.XPATH, "//div[@class='plver_box_body']//input[@name='weightage']")
+    ADD_QUESTION_BTN = (By.XPATH, "//button[@title='Add Question']")
+    BACK_BTN = (By.XPATH, "//button[@title='Back']")
+    VERSION_NAME_EDIT_BTN = (By.XPATH, "//button[@title='Edit Version/Category/Question']")
+    VERSION_NAME_CLOSE_BTN = (By.XPATH, "//div[@class='items']//button[@title='Close']")
+    VERSION_NAME_SAVE_BTN = (By.XPATH, "//button[@title='Save']")
+    MODAL_SAVE_BTN = (By.XPATH, "//button[text()='Save Anyway']")
+    MODAL_PUBLISH_BTN = (By.XPATH, "//button[text()='Publish']")

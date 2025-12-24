@@ -4,6 +4,7 @@ from selenium.webdriver.support.select import Select
 from pages.base_page import BasePage
 from utils.logger import get_logger
 from utils.counter_manager import get_next_process_number
+from utils.screenshot import Screenshot
 
 logger = get_logger()
 
@@ -30,6 +31,7 @@ class VersionModal(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
         self.last_toast=None
+        self.version_name=None
 
     # ---------------------------
     # MODAL HANDLERS
@@ -73,6 +75,7 @@ class VersionModal(BasePage):
         inp = self.wait_until_visible(self.VERSION_NAME_INPUT)
         inp.clear()
         inp.send_keys(name)
+        self.version_name = name
         logger.info(f"Entered version name: {name}")
 
     def enter_copy_version_name(self, name):
@@ -132,3 +135,19 @@ class VersionModal(BasePage):
                     pass
 
         logger.info(f"Modal filled with data: {data}")
+
+
+    def open_version(self):
+        try:
+            # self.video_version_accord()
+
+            version_tab = self.wait_until_clickable(self.get_version_tab())
+            version_tab.click()
+            logger.info(f"Opened version tab for {self.version_name}")
+            Screenshot.take( f"Opened_Version_Tab_{self.version_name}")
+        except Exception as e:
+            logger.error("Error opening version tab: %s", e)
+
+    def get_version_tab(self):
+
+        return (By.XPATH, f"//ul//li//span[@title='{self.version_name}']")

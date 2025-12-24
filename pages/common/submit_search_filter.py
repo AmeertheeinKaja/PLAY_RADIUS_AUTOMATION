@@ -10,6 +10,10 @@ class SubmitFilterSearch(BasePage):
     FILTER_SEARCH = (By.XPATH, "//button[normalize-space(text())='Search']")
     CLEAR_FILTER = (By.XPATH, "//button[normalize-space(text())='Clear']")
     SUBMIT_SEARCH = (By.XPATH, "//button[normalize-space(text())='Submit']")
+    CALL_LOGO = (By.XPATH, "//div[@class='pbi_content']//span[@title='Channel - Call']")
+    CHAT_LOGO = (By.XPATH, "//div[@class='pbi_content']//span[@title='Channel - Chat']")
+    EMAIL_LOGO = (By.XPATH, "//div[@class='pbi_content']//span[@title='Channel - Email']")
+    VIDEO_LOGO = (By.XPATH, "//div[@class='pbi_content']//span[@title='Channel - Video']")
 
     def __init__(self, driver):
         super().__init__(driver)
@@ -41,3 +45,14 @@ class SubmitFilterSearch(BasePage):
             logger.error("Failed to clear filter: {e}",e)
 
 
+    def get_record_type(self):
+        if self.is_element_present(self.CALL_LOGO):
+            return "Call"
+        if self.is_element_present(self.CHAT_LOGO):
+            return "Chat"
+        if self.is_element_present(self.EMAIL_LOGO):
+            return "Email"
+        if self.is_element_present(self.VIDEO_LOGO):
+            return "Video"
+
+        return "Unknown"

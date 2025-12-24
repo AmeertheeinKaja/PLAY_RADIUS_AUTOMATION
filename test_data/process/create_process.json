@@ -52,9 +52,9 @@
         },
         "chat": {
             "storage": {
-                "type": "http",
+                "type": "sftp",
                 "http": {
-                    "domain_url": "https://192.168.60.173/"
+                    "domain_url": "https://127.0.0.1"
                 },
                 "sftp": {
                     "hostName": "192.168.60.195",

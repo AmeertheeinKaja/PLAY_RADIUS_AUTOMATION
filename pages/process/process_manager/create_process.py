@@ -1,3 +1,4 @@
+from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 
@@ -9,7 +10,7 @@ from utils.logger import get_logger
 from utils.data_reader import load_test_data
 from utils.screenshot import Screenshot
 
-data = load_test_data("process/create_process.json")
+
 
 from pages.common.loader import Loader
 
@@ -69,43 +70,18 @@ class CreateProcess(BasePage):
 
         self.process_number = get_next_process_number()
 
-        # ✨ If parameter is passed → use it
-        # ✨ Otherwise → fallback to JSON value
-        base_code = process_code if process_code is not None else data.get("process_code", "")
-        base_name = process_name if process_name is not None else data.get("process_name", "")
 
-        self.process_code = f"{base_code}{self.process_number}"
-        self.process_Name = f"{base_name}{self.process_number}"
+
+
+        self.process_code = process_code
+        self.process_Name = process_name
 
         # Direct values (no need to append number)
-        self.review_rating = review_rating if review_rating is not None else data.get("review_rating", False)
-        self.channel = channels if channels is not None else data.get("channels", [])
+        self.review_rating = review_rating
+        self.channel = channels
 
-    def create_process(
-            self,
-            process_code=None,
-            process_name=None,
-            review_rating=None,
-            channels=None
-    ):
-        try:
-            # --- Override values if passed ---
-            if process_code is not None:
-                self.process_code = f"{process_code}{self.process_number}"
+    def create_process(self):
 
-            # Process Name
-            if process_name is None:
-                # auto-generate only when testcase does NOT supply a value
-                self.process_name = f"{data.get('process_name', '')}{self.process_number}"
-            else:
-                # use EXACT value from testcase (even empty "")
-                self.process_name = process_name if process_name == "" else f"{process_name}{self.process_number}"
-
-            if review_rating is not None:
-                self.review_rating = review_rating
-
-            if channels is not None:
-                self.channel = channels  # no number appended
 
             # --- Normal flow ---
             self.loader.load()
@@ -118,10 +94,9 @@ class CreateProcess(BasePage):
             self.loader.load()
 
             Screenshot.take(self.driver, f"Process_Created_{self.process_Name}")
-            print("Process Created Successfully")
+            logger.info("Process Created Successfully")
 
-        except Exception as e:
-            print("Error during creating process", e)
+
 
     def reset_process(self):
         reset_btn = self.wait_until_clickable(self.RESET_BTN)
@@ -171,9 +146,9 @@ class CreateProcess(BasePage):
             field.clear()
 
             # Always send EXACT value from create_process()
-            field.send_keys(self.process_name)
+            field.send_keys(self.process_Name)
 
-            logger.info(f"Process Name entered: '{self.process_name}'")
+            logger.info(f"Process Name entered: '{self.process_Name}'")
         except Exception as e:
             logger.error(f"Error entering Process Name: {e}", exc_info=True)
             raise
@@ -257,4 +232,92 @@ class CreateProcess(BasePage):
             return True
         except Exception as e:
             logger.error("Error clicking Edit button", exc_info=True)
+            return False
+
+    def get_enabled_channels(self):
+        """
+        Returns list of channels that are currently enabled in UI
+        Example: ["call", "email"]
+        """
+
+        enabled_channels = []
+
+        try:
+            # Grab ALL channel checkboxes
+            checkboxes = self.driver.find_elements(
+                By.XPATH,
+                "//input[@name='activeChannels']"
+            )
+
+            for cb in checkboxes:
+                try:
+                    value = cb.get_attribute("value")  # call/chat/email/...
+                    checked = cb.is_selected()
+
+                    if checked:
+                        enabled_channels.append(value)
+                except Exception:
+                    continue
+
+            logger.info(f"Enabled channels detected: {enabled_channels}")
+
+        except Exception as e:
+            logger.error("Error while reading enabled channels", exc_info=True)
+
+        return enabled_channels
+
+
+    def ensure_channel_enabled(self, channel_name: str) -> bool:
+
+        self.edit_process()
+        logger.info(f"Ensuring channel enabled: {channel_name}")
+        enabled_channels = self.get_enabled_channels()
+        if channel_name in enabled_channels:
+            logger.info(f"Channel '{channel_name}' already enabled.")
+            return True
+        logger.warning(f"Channel '{channel_name}' is disabled. Enabling now...")
+        try:
+            label_xpath = self.channelPath.get(channel_name)
+            if not label_xpath:
+                raise ValueError(f"No locator found for channel: {channel_name}")
+            # Click label to toggle checkbox
+            label = self.wait_until_clickable((By.XPATH, label_xpath))
+            label.click()
+            time.sleep(0.5)
+            # Save
+            save_btn = self.wait_until_clickable(self.SAVE_BTN)
+            save_btn.click()
+            Loader(self.driver).load()
+            # Handle deactivate popup if it appears
+            try:
+                modal_locator = (
+                    By.XPATH,
+                    "//div[@role='dialog' and contains(@class,'modal') and contains(@class,'show')]"
+                )
+                self.wait_until_visible(modal_locator)
+
+
+                deactivate_btn = self.wait_until_clickable((
+                    By.XPATH,
+                    "//button[normalize-space()='Deactivate'] | //button[contains(.,'Deactivate')]"
+                ))
+                self.driver.execute_script("arguments[0].click();", deactivate_btn)
+                logger.info("Deactivate popup confirmed.")
+                Loader(self.driver).load()
+
+            except TimeoutException:
+                logger.info("No deactivate popup appeared.")
+
+            # Final verification
+            enabled_channels = self.get_enabled_channels()
+            if channel_name in enabled_channels:
+                logger.info(f"Channel '{channel_name}' successfully enabled.")
+                return True
+
+            logger.error(f"Channel '{channel_name}' still disabled after attempt.")
+            return False
+
+        except Exception:
+            logger.exception(f"Failed to enable channel '{channel_name}'")
+            Screenshot.take(self.driver, f"enable_channel_failed_{channel_name}")
             return False

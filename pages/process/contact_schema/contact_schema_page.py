@@ -10,7 +10,7 @@ from pages.common.loader import Loader
 from utils.data_reader import load_test_data
 from utils.screenshot import Screenshot
 
-data = load_test_data("contact_schema.json")
+
 
 logger = get_logger(__name__)
 class ContactSchema(BasePage):
@@ -27,12 +27,40 @@ class ContactSchema(BasePage):
     NAME_INPUT=(By.XPATH,"//input[@name='name_1']")
     SELECT_INPUT=(By.XPATH,"//select[@name='dataType_1']")
     ATTRIBUTE_ROWS = (By.XPATH, "//tr[contains(@class,'custom-attribute-row')]")
+    ADD_SUCCESS_TEXT="Contact attributes saved successfully"
+    ERROR_TEXT="Name field in these attributes is contains duplicate values"
+    UPDATE_SUCCESS="Contact attributes updated successfully"
+
+
 
     def __init__(self, driver):
         super().__init__(driver)
         self.loader = Loader(driver)
-        self.mode=data['mode']
-        self.field_list = data.get("fields", [])
+        self.last_toast = None
+
+    def configure_contact_schema(self, mode, field_list=None):
+        """
+        Configure Contact Schema based on mode.
+        - Auto mode: only select mode & save
+        - Manual mode: select mode, add attributes & save
+        """
+
+        self.choose_mode(mode)
+        logger.info(f"configuring mode for {mode}")
+
+        if mode and mode.lower() == "manualmode":
+            if not field_list:
+                raise ValueError("Field list is required for Manual Mode")
+
+            logger.info("Manual mode selected → Adding attributes")
+            self.add_attribute(field_list)
+
+        elif mode and mode.lower() == "automode":
+            logger.info("Auto mode selected → Skipping attribute creation")
+            self.save_contact()
+
+        else:
+            raise ValueError(f"Unsupported contact schema mode: {mode}")
 
     def tab_contact_schema(self):
         tab_contact_schema=self.wait_until_clickable(self.TAB_CONTACT_SCHEMA)
@@ -41,20 +69,21 @@ class ContactSchema(BasePage):
         logger.info("contact schema tab selected")
         Screenshot.take(self.driver,f"Contact schema tab")
 
-    def choose_mode(self):
-        if self.mode and self.mode.lower() == 'manualmode':
+    def choose_mode(self, mode):
+        if mode and mode.lower() == 'manualmode':
             mode_locator = self.MANUAL_MODE_RADIO
             mode_name = "Manual Mode"
-        elif self.mode and self.mode.lower() == 'automode':
+        elif mode and mode.lower() == 'automode':
             mode_locator = self.AUTO_MODE_RADIO
             mode_name = "Auto Mode"
         else:
-            logger.warning(f"Conversion mode '{self.mode}' not recognized or missing. Defaulting to Manual Mode.")
+            logger.warning(f"Conversion mode '{mode}' not recognized or missing. Defaulting to Manual Mode.")
             mode_locator = self.MANUAL_MODE_RADIO
             mode_name = "Manual Mode (Defaulted)"
+
         self.driver.find_element(*mode_locator).click()
         logger.info(f"Selected Conversion Mode: {mode_name}")
-        Screenshot.take(self.driver,f"Selected Conversion Mode: {mode_name}")
+        Screenshot.take(self.driver, f"Selected Conversion Mode: {mode_name}")
         self.loader.load()
 
 
@@ -63,8 +92,17 @@ class ContactSchema(BasePage):
         """Clicks the Save button."""
         save_btn = self.wait_until_clickable(self.SAVE_BTN)
         save_btn.click()
+        self.toast_text()
         logger.info("Save button clicked.")
         Screenshot.take(self.driver,f"Contact schema save")
+
+    def toast_text(self):
+        toast_text = self.capture_toast()
+        self.last_toast = toast_text  # Store the value
+        logger.info(f"Captured Toast: {toast_text}")
+        Screenshot.take(f"toast_{toast_text.replace(' ', '_')}")
+
+        return toast_text
 
     def edit_contact(self):
         """Clicks the Save button."""
@@ -110,10 +148,10 @@ class ContactSchema(BasePage):
         data_type_dropdown.select_by_visible_text(datatype)
         logger.info(f"Selected question type: {datatype}")
 
-    def add_attribute(self):
-        total_fields = len(self.field_list)
+    def add_attribute(self,field_list):
+        total_fields = len(field_list)
 
-        for index, field in enumerate(self.field_list, start=1):
+        for index, field in enumerate(field_list, start=1):
 
             # dynamic locators
             name_locator = (By.XPATH, f"//input[@name='name_{index}']")
@@ -168,6 +206,17 @@ class ContactSchema(BasePage):
         if remove_buttons:
             remove_buttons[-1].click()  # delete LAST one
 
+    def get_field_error(self, field_name):
+        """
+        field_name example: name_1, dataType_1
+        """
+        error_locator = (
+            By.XPATH,
+            f"//*[@name='{field_name}']/ancestor::div[contains(@class,'form-floating')]"
+            "//div[contains(@class,'invalid-tooltip') and string-length(normalize-space())>0]"
+        )
+        return self.wait_until_visible(error_locator).text.strip()
+
     def delete_last_empty_row(self):
         rows = self.driver.find_elements(
             By.XPATH, "//div[contains(@class,'row') and contains(@class,'gx-2')][.//input[contains(@name,'name_')]]"
@@ -190,56 +239,61 @@ class ContactSchema(BasePage):
                 row.find_element(By.XPATH, ".//button[@title='Remove']").click()
                 logger.info("[REMOVE EMPTY ROW] Deleted an empty row.")
 
-    def edit_attribute(self):
+    def edit_attribute(self, field_list):
         self.edit_contact()
         self.loader.load()
 
-        required_rows = len(self.field_list)
-        logger.info(f"[START EDIT] Required JSON rows: {required_rows}")
+        required_rows = len(field_list)
+        existing_rows = self.get_total_rows()
 
-        # 1. Count rows currently visible on UI
-        existing_rows_ui = self.get_total_rows()
-        logger.info(f"[UI ROWS] Existing rows on UI: {existing_rows_ui}")
+        logger.info(f"[EDIT] UI rows: {existing_rows}, JSON rows: {required_rows}")
 
-        # 2. How many NEW rows to add?
-        rows_to_add = required_rows
-        logger.info(f"[ADD REQUIRED] Need to add {rows_to_add} new rows")
+        # 1️⃣ Update existing rows
+        rows_to_update = min(existing_rows, required_rows)
 
-        # 3. Add rows (stable loop)
-        for i in range(rows_to_add):
-            logger.info(f"[ADD] Adding row {i + 1}/{rows_to_add}")
-            self.add_attribute_field()
-            time.sleep(0.3)
+        for index in range(1, rows_to_update + 1):
+            field = field_list[index - 1]
 
-        # 4. Now fill ONLY the newly-added rows
-        start_index = existing_rows_ui + 1
-        end_index = existing_rows_ui + required_rows
+            logger.info(f"[UPDATE] Row {index} → {field}")
 
-        logger.info(f"[UPDATE RANGE] Updating rows {start_index} to {end_index}")
-
-        json_index = 0
-        for row_index in range(start_index, end_index + 1):
-            field = self.field_list[json_index]
-            json_index += 1
-
-            logger.info(f"[UPDATE] Row {row_index} → {field}")
-
-            name_locator = self.get_name_input(row_index)
-            type_locator = self.get_type_select(row_index)
-
-            # update name
-            name_input = self.wait_until_clickable(name_locator)
+            name_input = self.wait_until_clickable(self.get_name_input(index))
             name_input.clear()
             name_input.send_keys(field["fieldName"])
 
-            # update datatype
-            dropdown = Select(self.wait_until_clickable(type_locator))
+            dropdown = Select(self.wait_until_clickable(self.get_type_select(index)))
             dropdown.select_by_visible_text(field["dataType"])
 
-        # 5. Save
-        logger.info("[SAVE]")
+        # 2️⃣ Add missing rows
+        if required_rows > existing_rows:
+            rows_to_add = required_rows - existing_rows
+            logger.info(f"[ADD] Adding {rows_to_add} rows")
+
+            for _ in range(rows_to_add):
+                self.add_attribute_field()
+                self.loader.load()
+
+            for index in range(existing_rows + 1, required_rows + 1):
+                field = field_list[index - 1]
+
+                name_input = self.wait_until_clickable(self.get_name_input(index))
+                name_input.clear()
+                name_input.send_keys(field["fieldName"])
+
+                dropdown = Select(self.wait_until_clickable(self.get_type_select(index)))
+                dropdown.select_by_visible_text(field["dataType"])
+
+        # 3️⃣ Delete extra rows
+        if existing_rows > required_rows:
+            rows_to_delete = existing_rows - required_rows
+            logger.info(f"[DELETE] Removing {rows_to_delete} rows")
+
+            for _ in range(rows_to_delete):
+                self.delete_last_attribute_field()
+                self.loader.load()
+
+        # 4️⃣ Save
         self.save_contact()
-        Screenshot.take(self.driver,f"Attribut Saved")
+        Screenshot.take(self.driver, "Attribute Edited & Saved")
 
     def delete_attribute_by_name(self, attribute_name):
 
@@ -271,3 +325,29 @@ class ContactSchema(BasePage):
         Screenshot.take(self.driver, f"Attribut Saved")
         self.capture_toast()
         Screenshot.take(self.driver, f"Attribut Saved")
+
+    def set_field_value(self, index, field_name, datatype):
+        name_input = self.wait_until_clickable(self.get_name_input(index))
+        name_input.clear()
+        name_input.send_keys(field_name)
+
+        dropdown = Select(self.wait_until_clickable(self.get_type_select(index)))
+        dropdown.select_by_visible_text(datatype)
+
+    def add_empty_row(self):
+        add_btn = self.wait_until_clickable(self.ADD_ATTRIBUTE)
+        add_btn.click()
+        self.loader.load()
+
+    def insert_duplicate_field(self, field_name, datatype):
+        self.edit_contact()
+        self.loader.load()
+
+        # add second row
+        self.add_empty_row()
+
+        # fill values using class level method
+        self.set_field_value(index=2, field_name=field_name, datatype=datatype)
+
+        # save to capture toast
+        self.save_contact()

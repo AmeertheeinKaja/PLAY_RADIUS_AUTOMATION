@@ -6,20 +6,15 @@ from selenium.webdriver.support.select import Select
 import time
 from pages.base_page import BasePage
 
-from utils.count_manager import get_next_process_number
+
 from utils.logger import get_logger
 from utils.data_reader import load_test_data
 
 from utils.screenshot import Screenshot
 
-data = load_test_data("questionDataNew.json")
-versiondata=load_test_data("versionData.json")
 
 
-from pages.loader import Loader
-from pages.OpenProcess import OpenProcess
 
-# from testdata.createProcessData import process_code,process_Name,review_rating,channel
 
 
 logger = get_logger()
@@ -50,17 +45,19 @@ class VersionProcessConfig(BasePage):
     MODAL_SAVE_BTN = (By.XPATH, "//button[text()='Save Anyway']")
     MODAL_CANCEL_BTN=(By.XPATH, "//button[@title='Cancel']")
     MODAL_PUBLISH_BTN=(By.XPATH,"//button[text()='Publish']")
+    CATEGORY_ADD_SUCCESS="Category added successfully"
+    CATEGORY_ADD_FAIL="Category already exists for this version"
+    QUESTION_ADD_SUCCESS="Question added successfully"
+    QUESTION_ADD_FAIL="Question already exists for this version"
+    QUESTION_ADD_FAIL2="Question already exists for the category"
+    CATEGORY_DELETE_SUCCESS="Category deleted successfully"
+    QUESTION_DELETE_SUCCESS="Question deleted Successfully!"
 
-
-
-
-
-
-    def __init__(self, driver):
+    def __init__(self, driver, categories=None, version_name=None):
         super().__init__(driver)
-        self.data = load_test_data("questionDataNew.json")
-        self.categories = self.data.get("categories", [])
-        self.version_name = versiondata.get("versionName")
+        self.categories = categories or []
+        self.version_name = version_name
+        self.last_toast = None
 
     def click_edit_version_name_btn(self):
         self.click(self.VERSION_NAME_EDIT_BTN)
@@ -70,6 +67,7 @@ class VersionProcessConfig(BasePage):
 
     def click_save_version(self):
         self.click(self.VERSION_NAME_SAVE_BTN)
+        self.toast_text()
 
     def click_cancel_version(self):
         self.click(self.VERSION_NAME_CLOSE_BTN)
@@ -148,6 +146,7 @@ class VersionProcessConfig(BasePage):
 
                 modal_save_btn = self.wait_until_clickable(self.MODAL_SAVE_BTN)
                 modal_save_btn.click()
+                self.toast_text()
                 self.wait_invisible(modal_locator)
                 logger.info("Modal Save Anyway clicked.")
 
@@ -190,7 +189,7 @@ class VersionProcessConfig(BasePage):
             self.wait_until_clickable(self.ADD_QUESTION_BTN).click()
             logger.info(f"Clicked Add Question button for code: {code}.")
             time.sleep(1)
-
+            self.toast_text()
             return True
         except Exception as e:
             logger.error(f"Error adding question '{code}': {e}", exc_info=True)
@@ -216,6 +215,7 @@ class VersionProcessConfig(BasePage):
             modal_save_btn = self.wait_until_clickable(self.MODAL_PUBLISH_BTN)
             modal_save_btn.click()
 
+
             logger.info(f"Version {self.version_name} published successfully.")
             Screenshot.take( f"click_error_{self.version_name}")
 
@@ -233,3 +233,27 @@ class VersionProcessConfig(BasePage):
 
 
 
+    def click_back_button(self):
+        back_button=self.wait_until_clickable(self.BACK_BTN)
+        back_button.click()
+        logger.info("Clicked Back button to return to Process Configuration page")
+        return True
+
+    def click_publish_button(self):
+        publish_button=self.wait_until_clickable(self.PUBLISH_CATEGORY_VERSION_BTN)
+        publish_button.click()
+        self.toast_text()
+        logger.info("Clicked Publish Version button")
+        return True
+    def click_modal_save_button(self):
+        modal_save_btn = self.wait_until_clickable(self.MODAL_PUBLISH_BTN)
+        modal_save_btn.click()
+        self.toast_text()
+        logger.info("Clicked Modal Publish button")
+        return True
+
+    def toast_text(self):
+        txt = self.capture_toast()
+        self.last_toast = txt
+        logger.info(f"Toast: {txt}")
+        return txt

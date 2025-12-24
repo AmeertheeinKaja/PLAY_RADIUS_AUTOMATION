@@ -1,0 +1,64 @@
+{
+  "categories": [
+    {
+      "categoryName": "SERVICE QUALITY",
+      "categoryWeight": "50",
+      "questions": [
+        {
+          "questionCode": "SQ01",
+          "question": "Was the customers issue resolved efficiently?",
+          "questionType": "Yes | No",
+          "questionWeight": "40"
+        },
+        {
+          "questionCode": "SQ02",
+          "question": "Rate the agents communication clarity",
+          "questionType": "1 - 5",
+          "questionWeight": "30"
+        },
+        {
+          "questionCode": "SQ03",
+          "question": "How professional was the agent during the call?",
+          "questionType": "Poor | Average | Good",
+          "questionWeight": "20"
+        },
+        {
+          "questionCode": "SQ04",
+          "question": "Was the agent proactive in offering solutions?",
+          "questionType": "Yes | No",
+          "questionWeight": "10"
+        }
+      ]
+    },
+    {
+      "categoryName": "CUSTOMER EXPERIENCE",
+      "categoryWeight": "50",
+      "questions": [
+        {
+          "questionCode": "CE01",
+          "question": "Did you feel valued as a customer?",
+          "questionType": "Like | Dislike",
+          "questionWeight": "25"
+        },
+        {
+          "questionCode": "CE02",
+          "question": "Rate the friendliness of the agent.",
+          "questionType": "1 - 5",
+          "questionWeight": "25"
+        },
+        {
+          "questionCode": "CE03",
+          "question": "Was your concern fully understood by the agent?",
+          "questionType": "Yes | No",
+          "questionWeight": "25"
+        },
+        {
+          "questionCode": "CE04",
+          "question": "Would you contact our service again for assistance?",
+          "questionType": "Yes | No",
+          "questionWeight": "25"
+        }
+      ]
+    }
+  ]
+}

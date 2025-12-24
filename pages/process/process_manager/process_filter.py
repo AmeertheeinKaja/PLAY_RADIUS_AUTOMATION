@@ -6,13 +6,11 @@ from selenium.webdriver.common.by import By
 from pages.common.loader import Loader
 
 from pages.base_page import BasePage
-from utils.data_reader import load_test_data
+
 from utils.screenshot import Screenshot
 
 logger = logging.getLogger(__name__)
 
-# Load JSON only once
-data = load_test_data("process/filter_process.json")
 
 
 class ProcessFilter(BasePage):
@@ -42,57 +40,44 @@ class ProcessFilter(BasePage):
         super().__init__(driver)
         self.loader= Loader(driver)
 
-        # DEFAULT values from JSON
-        self.processName = data.get("processName")
-        self.processCode = data.get("processCode")
-
-        rating_bool = data.get("ratingView")
-
-        if rating_bool is True:
-            self.ratingView = "Enabled"
-        elif rating_bool is False:
-            self.ratingView = "Disabled"
-        else:
-            self._initial_ratingView = "Choose"
-
-        logger.info(f"Loaded defaults: Code={self.processCode}, Name={self.processName}, Rating={self.ratingView}")
 
     # ------------------------ POM Methods ------------------------
 
-    def process_code_input(self):
+    def process_code_input(self,process_code:str):
         try:
             elem = self.wait_until_clickable(self._PROCESS_CODE_INPUT)
             elem.clear()
-            elem.send_keys(self.processCode)
+            elem.send_keys(process_code)
             logger.info(f"Entered Process Code: '{self.processCode}'")
         except Exception as e:
             logger.error(f"Failed to enter Process Code: {e}")
             raise
 
-    def process_name_input(self):
+    def process_name_input(self,process_name):
         try:
             elem = self.wait_until_clickable(self._PROCESS_NAME_INPUT)
             elem.clear()
-            elem.send_keys(self.processName)
+            elem.send_keys(process_name)
             logger.info(f"Entered Process Name: '{self.processName}'")
         except Exception as e:
             logger.error(f"Failed to enter Process Name: {e}")
             raise
 
-    def select_rating_element(self, rating_view: str = None): # <-- ADD THE PARAMETER
-        """
-        Selects an option from the Review & Ratings dropdown.
-        If rating_view is provided, it overrides the default/JSON value.
-        """
-        target_rating_view = rating_view if rating_view is not None else self._initial_ratingView
+    def _map_rating_view(self, rating_view):
+        if rating_view is True:
+            return "Enabled"
+        if rating_view is False:
+            return "Disabled"
+        return "Choose"
 
+    def select_rating_element(self, rating_view):
         try:
-            rating_element = self.wait_until_clickable(self._PROCESS_STATUS_SELECT)
-            rating_dropdown = Select(rating_element)
-            rating_dropdown.select_by_visible_text(target_rating_view) # Use the target_rating_view
-            logger.info(f"Selected Rating View: '{target_rating_view}'")
-        except Exception as e:
-            logger.error(f"Failed to select Rating View '{target_rating_view}': {e}")
+            target = self._map_rating_view(rating_view)
+            dropdown = Select(self.wait_until_clickable(self._PROCESS_STATUS_SELECT))
+            dropdown.select_by_visible_text(target)
+            logger.info(f"Selected Rating View: {target}")
+        except Exception:
+            logger.exception("Failed to select rating view")
             raise
 
     def submit(self):
@@ -112,38 +97,69 @@ class ProcessFilter(BasePage):
 
         # ... existing code ...
 
-        def apply_filter(self, processCode=None, processName=None, ratingView=None):
-            """
-            Apply filter using either:
-            - Passed parameters (override)
-            - OR defaults loaded from JSON
-            """
+    # def apply_filter(self, processCode=None, processName=None, ratingView=None):
+    #     """
+    #     Apply filter using either:
+    #     - Passed parameters (override)
+    #     - OR defaults loaded from JSON
+    #     """
+    #
+    #     # Override values if provided
+    #     if processCode is not None:
+    #         self.processCode = processCode
+    #     if processName is not None:
+    #         self.processName = processName
+    #     target_rating_view_for_this_call = None
+    #     if ratingView is not None:
+    #         if ratingView is True:
+    #             target_rating_view_for_this_call = "Enabled"
+    #         elif ratingView is False:
+    #             target_rating_view_for_this_call = "Disabled"
+    #         else:
+    #             target_rating_view_for_this_call = "Choose"
+    #     else:
+    #         target_rating_view_for_this_call = self._initial_ratingView  # Fallback to initial if not overridden
+    #     logger.info(
+    #         f"Final Filter Data => Code: {self.processCode}, Name: {self.processName}, Rating: {target_rating_view_for_this_call}"
+    #         # <--- Corrected here
+    #     )
+    #     # Execute filter steps
+    #     self.process_code_input()
+    #     self.process_name_input()
+    #     self.select_rating_element(rating_view=target_rating_view_for_this_call)
+    #     self.submit()
+    #     self.loader.load()
 
-            # Override values if provided
-            if processCode is not None:
-                self.processCode = processCode
-            if processName is not None:
-                self.processName = processName
-            target_rating_view_for_this_call = None
-            if ratingView is not None:
-                if ratingView is True:
-                    target_rating_view_for_this_call = "Enabled"
-                elif ratingView is False:
-                    target_rating_view_for_this_call = "Disabled"
-                else:
-                    target_rating_view_for_this_call = "Choose"
-            else:
-                target_rating_view_for_this_call = self._initial_ratingView  # Fallback to initial if not overridden
-            logger.info(
-                f"Final Filter Data => Code: {self.processCode}, Name: {self.processName}, Rating: {target_rating_view_for_this_call}"
-                # <--- Corrected here
-            )
-            # Execute filter steps
-            self.process_code_input()
-            self.process_name_input()
-            self.select_rating_element(rating_view=target_rating_view_for_this_call)
-            self.submit()
-            self.loader.load()
+    def apply_filter(self, processCode=None, processName=None, ratingView=None):
+        """
+        Apply filter using explicitly passed values.
+        POM is stateless — no JSON, no stored attributes.
+        """
+
+        logger.info(
+            f"Applying filter => "
+            f"Code: {processCode}, "
+            f"Name: {processName}, "
+            f"Rating: {ratingView}"
+        )
+
+        # Open filter panel safely
+        self.open_filter_panel()
+
+        # Apply only what is provided
+        if processCode:
+            self.process_code_input(processCode)
+
+        if processName:
+            self.process_name_input(processName)
+
+        # Always select rating dropdown (safe default = "Choose")
+        mapped_rating = self._map_rating_view(ratingView)
+        self.select_rating_element(mapped_rating)
+
+        # Submit
+        self.submit()
+        self.loader.load()
 
     # ... rest of the file ...
 

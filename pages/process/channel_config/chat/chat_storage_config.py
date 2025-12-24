@@ -1,11 +1,12 @@
+from selenium.webdriver.common.bidi.storage import Storage
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 from pages.common.loader import Loader
 from utils.logger import get_logger
 from utils.screenshot import Screenshot
-from utils.data_reader import load_test_data
 
-full_config = load_test_data("processData.json")
+
+
 logger = get_logger(__name__)
 
 
@@ -23,6 +24,7 @@ class ChatStorageConfig(BasePage):
 
     # HTTP fields
     STORAGE_HTTP_URL = (By.XPATH, f"{CHAT_CONFIG_SCOPE}//input[@name='dirPath']")
+    STORAGE_HTTP_SUCCESS="Channel updated successfully"
 
     # SFTP fields
     STORAGE_SFTP_HOSTNAME = (By.XPATH, f"{CHAT_CONFIG_SCOPE}//input[@name='host']")
@@ -44,61 +46,64 @@ class ChatStorageConfig(BasePage):
     STORAGE_EDIT_BTN  = (By.XPATH, f"{CHAT_CONFIG_SCOPE}//button[@title='Edit']")
     STORAGE_TEST_BTN  = (By.XPATH, f"{CHAT_CONFIG_SCOPE}//button[@title='Test Connection']")
 
+    ERROR_TEXT = "Connection failed. ERROR: sftp.connect: All configured authentication methods failed after 2 attempts"
+    INVALID_INPUT_PATH = (By.XPATH, f"{CHAT_CONFIG_SCOPE}//div[contains(@class, 'invalid-tooltip')]")
+    INVALID_HOST_PATH=(By.XPATH, f"{CHAT_CONFIG_SCOPE}//input[@name='host']/following-sibling::div[normalize-space()='This field is required']")
+    INVALID_PORT_PATH = (By.XPATH,
+                         f"{CHAT_CONFIG_SCOPE}//input[@name='port']/following-sibling::div[normalize-space()='This field is required']")
+    INVALID_PASSWORD_PATH = (By.XPATH,
+                         f"{CHAT_CONFIG_SCOPE}//input[@name='password']/following-sibling::div[normalize-space()='This field is required']")
+    INVALID_USER_PATH = (By.XPATH,
+                         f"{CHAT_CONFIG_SCOPE}//input[@name='user']/following-sibling::div[normalize-space()='This field is required']")
+
+    SUCCESS_TEXT="Channel updated successfully"
+
+
+
     def __init__(self, driver):
         super().__init__(driver)
         self.loader = Loader(driver)
-
-        call_config = full_config.get("channel_config", {}).get("call", {})
-        storage = call_config.get("storage", {})
-
-        # Storage Type
-        self.storage_type = storage.get("type", "")
-
-        # HTTP
-        self.httpurl = storage.get("http", {}).get("domain_url", "")
-
-        # SFTP
-        sftp = storage.get("sftp", {})
-        self.sftp_host = sftp.get("hostName", "")
-        self.sftp_port = str(sftp.get("port", ""))
-        self.sftp_username = sftp.get("username", "")
-        self.sftp_password = sftp.get("password", "")
-        self.sftp_dir_path = sftp.get("dir_path", "")
-
-        # FTP
-        ftp = storage.get("ftp", {})
-        self.ftp_host = ftp.get("hostName", "")
-        self.ftp_port = str(ftp.get("port", ""))
-        self.ftp_username = ftp.get("username", "")
-        self.ftp_password = ftp.get("password", "")
-        self.ftp_dir_path = ftp.get("dir_path", "")
+        self.storage =None
+        self.last_toast = None
 
     # ----------------------------------------------------
     # STORAGE MAIN ENTRY
     # ----------------------------------------------------
-    def storage_config(self):
-        self.storage_tab()
 
-        if not self.storage_type:
-            logger.warning("Storage type missing in JSON")
-            return
+    def set_storage_type(self, storage_type: str):
+        self.storage = storage_type.lower()
+        logger.info(f"Setting storage type from test: {self.storage}")
 
-        t = self.storage_type.lower()
-        logger.info(f"Configuring storage type: {t}")
 
-        if t == "http":
-            self.http_config()
-        elif t == "sftp":
-            self.sftp_config()
-        elif t == "ftp":
-            self.ftp_config()
-        else:
-            logger.warning(f"Unknown storage type: {t}")
 
+
+    def _apply_storage_fields(self, storage_data):
+        if self.storage == "http":
+            self.http_config(storage_data.get("http", {}))
+        elif self.storage == "sftp":
+            self.sftp_config(storage_data.get("sftp", {}))
+        elif self.storage == "ftp":
+            self.ftp_config(storage_data.get("ftp", {}))
+
+    def storage_config(self, storage_data):
+        self._apply_storage_fields(storage_data)
+
+    def edit_storage_config(self, storage_data):
+        self.try_click_edit()
+        self._apply_storage_fields(storage_data)
+
+    def toast_text(self):
+        toast_text = self.capture_toast()
+        self.last_toast = toast_text  # Store the value
+        logger.info(f"Captured Toast: {toast_text}")
+        Screenshot.take(f"toast_{toast_text.replace(' ', '_')}")
+
+        return toast_text
     # ----------------------------------------------------
     # HTTP STORAGE CONFIG
     # ----------------------------------------------------
-    def http_config(self):
+    def http_config(self,http_data):
+        self.httpurl = http_data.get("domain_url","")
         try:
             self.http()
             field = self.driver.find_element(*self.STORAGE_HTTP_URL)
@@ -106,6 +111,8 @@ class ChatStorageConfig(BasePage):
             field.send_keys(self.httpurl)
 
             self.click_save()
+            self.toast_text()
+            self.loader.load()
             Screenshot.take(self.driver, "http-configured")
             logger.info("HTTP storage configured successfully.")
 
@@ -115,7 +122,12 @@ class ChatStorageConfig(BasePage):
     # ----------------------------------------------------
     # SFTP STORAGE CONFIG
     # ----------------------------------------------------
-    def sftp_config(self):
+    def sftp_config(self,sftp_data):
+        self.sftp_host = sftp_data.get("hostName","")
+        self.sftp_port = sftp_data.get("port","")
+        self.sftp_username = sftp_data.get("username","")
+        self.sftp_password = sftp_data.get("password","")
+        self.sftp_dir_path = sftp_data.get("dirPath","")
         try:
             self.sftp()
 
@@ -129,6 +141,8 @@ class ChatStorageConfig(BasePage):
             self.wait_for_filter_ui_ready()
 
             self.click_save()
+            self.toast_text()
+            self.loader.load()
             Screenshot.take(self.driver, "sftp-configured")
 
         except Exception as e:
@@ -137,7 +151,12 @@ class ChatStorageConfig(BasePage):
     # ----------------------------------------------------
     # FTP STORAGE CONFIG
     # ----------------------------------------------------
-    def ftp_config(self):
+    def ftp_config(self,ftp_data):
+        self.ftp_host = ftp_data.get("hostName","")
+        self.ftp_port = ftp_data.get("port","")
+        self.ftp_username = ftp_data.get("username","")
+        self.ftp_password = ftp_data.get("password","")
+        self.ftp_dir_path = ftp_data.get("dirPath","")
         try:
             self.ftp()
 
@@ -151,6 +170,8 @@ class ChatStorageConfig(BasePage):
             self.wait_for_filter_ui_ready()
 
             self.click_save()
+            self.toast_text()
+            self.loader.load()
             Screenshot.take(self.driver, "ftp-configured")
 
         except Exception as e:
@@ -193,3 +214,43 @@ class ChatStorageConfig(BasePage):
 
     def ftp(self):
         self.driver.find_element(*self.STORAGE_RADIO_FTP).click()
+
+    def wait_for_element_optional(self, locator, timeout=2):
+        try:
+            return self.wait_until_present(locator, timeout=timeout)
+        except:
+            return None
+
+    def try_click_edit(self):
+        try:
+            if self.is_element_present(self.STORAGE_EDIT_BTN):
+                logger.info("Edit button found. Clicking edit.")
+                self.click_edit()
+            else:
+                logger.info("Edit button not found. Skipping edit click.")
+        except Exception as e:
+            logger.error(f"Error while trying to click edit: {e}", exc_info=True)
+
+    def is_element_present(self, locator):
+        try:
+            self.driver.find_element(*locator)
+            return True
+        except:
+            return False
+    def get_error_message(self, locator):
+        try:
+            error_element = self.wait_until_visible(locator)
+            return error_element.text.strip()
+        except:
+            return None
+
+    def assert_success(self):
+        if self.last_toast != self.SUCCESS_TEXT:
+            raise AssertionError(f"Expected success toast but got: {self.last_toast}")
+        logger.info("Storage updated successfully.")
+
+    def assert_error(self, expected_message):
+        if expected_message not in (self.last_toast or ""):
+            raise AssertionError(
+                f"Expected error: '{expected_message}', got: '{self.last_toast}'"
+            )

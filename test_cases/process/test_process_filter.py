@@ -20,6 +20,7 @@ logger = get_logger(__name__)
 
 @pytest.mark.usefixtures("driver_function")
 class TestProcessFilter:
+    data = load_test_data("process/filter_process.json")
     def test_filter_process_by_name(self, driver_function):
         login = LoginPage(driver_function)
         loader = Loader(driver_function)

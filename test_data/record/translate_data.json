@@ -1,0 +1,24 @@
+{
+  "translationTests": [
+    {
+      "recordId": "QU1765383423414EC",
+      "language": "Japanese",
+      "expectedTranslatedLanguage": "Japanese"
+    },
+    {
+      "recordId": "QU1765383423414EC",
+      "language": "Spanish",
+      "expectedTranslatedLanguage": "Spanish"
+    },
+    {
+      "recordId": "QU1765383423414EC",
+      "language": "Arabic",
+      "expectedTranslatedLanguage": "Arabic"
+    },
+    {
+      "recordId": "QU1765383423414EC",
+      "language": "French",
+      "expectedTranslatedLanguage": "French"
+    }
+  ]
+}

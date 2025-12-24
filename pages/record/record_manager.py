@@ -16,6 +16,9 @@ class RecordManager(BasePage):
     CLOSE_RECORD_BTN = (By.XPATH, "//button[@title='Close']")
     RECORD_TABLE = (By.XPATH, "//table//tr")
     SCROLL_CONTAINER = (By.XPATH, "//div[@class='wrapper_main']//div[@style='width: 100%; overflow: auto;']")
+    def __init__(self, driver):
+        super().__init__(driver)
+        self.toast_text = ""
 
     def record(self):
         """Opens the 'All Records' section."""
@@ -53,10 +56,10 @@ class RecordManager(BasePage):
             self.driver.execute_script("arguments[0].click();", view_record_button)
             logger.info("✅ First record clicked.")
 
-            loader.load()  # Wait after record opens
-            WebDriverWait(self.driver, 15).until_not(
-                EC.presence_of_element_located(self.RECORD_TABLE)
-            )
+            self.toast_text =self.capture_toast()
+            logger.info(f"Toast message after opening record: {self.toast_text }")
+
+
 
             Screenshot.take(self.driver, "View_Record")
             logger.info("✅ Record opened successfully.")

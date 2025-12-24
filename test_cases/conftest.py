@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -14,12 +16,16 @@ import allure
 # 🔧 BROWSER SETUP
 # =========================================================
 def setup_browser():
+    download_dir = Path(__file__).parent.parent / "tests" / "downloads"
+    download_dir.mkdir(parents=True, exist_ok=True)
     chrome_options = Options()
 
     # Basic settings
     chrome_options.add_argument("--start-maximized")
     chrome_options.add_argument("--disable-notifications")
     chrome_options.add_argument("--disable-popup-blocking")
+
+    chrome_options.add_argument("--ignore-certificate-errors")
 
     #  Disable Chrome Password Manager
     chrome_options.add_experimental_option("prefs", {
@@ -59,7 +65,13 @@ def setup_browser():
         service=Service(ChromeDriverManager().install()),
         options=chrome_options
     )
-
+    driver.execute_cdp_cmd(
+        "Page.setDownloadBehavior",
+        {
+            "behavior": "allow",
+            "downloadPath": str(download_dir.resolve())
+        }
+    )
     driver.implicitly_wait(5)
     return driver
 

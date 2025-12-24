@@ -8,8 +8,6 @@ from pages.common.loader import Loader
 from utils.data_reader import load_test_data
 from utils.screenshot import Screenshot
 
-data = load_test_data("process/create_process.json")
-processcode = data["process_code"]
 
 
 logger = get_logger(__name__)
@@ -18,6 +16,9 @@ class OpenProcess(BasePage):
     ALLPROCESS_BTN=(By.XPATH, "//button[@title='Process']")
     PROCESS_SEARCH = (By.XPATH, "//input[@id='process_search_input']")
     SELECT_SEARCH = (By.XPATH, "//*[@id='root']/div[2]/div/div[3]/div/div/div[2]/div/div[2]/table/tbody/tr[1]")
+
+
+
 
     def process(self):
         try:
@@ -39,7 +40,7 @@ class OpenProcess(BasePage):
         select_input = self.wait_until_clickable(self.SELECT_SEARCH)
         select_input.click()
 
-    def search_by_code(self, processcode=processcode):
+    def search_by_code(self, processcode=None):
         loader = Loader(self.driver)
         try:
             logger.info(f"🔍 Searching for process code: {processcode}")

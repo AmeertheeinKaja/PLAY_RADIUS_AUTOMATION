@@ -1,0 +1,18 @@
+{
+  "add": [
+    "This is my first comment",
+    "Customer asked for callback update",
+    "Follow-up required on ticket"
+  ],
+
+  "edit": [
+    {
+      "from": "This is my first comment",
+      "to": "Updated first comment text"
+    }
+  ],
+
+  "delete": [
+    "Follow-up required on ticket"
+  ]
+}

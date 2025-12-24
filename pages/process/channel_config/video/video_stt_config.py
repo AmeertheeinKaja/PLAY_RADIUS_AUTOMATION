@@ -11,7 +11,7 @@ from utils.logger import get_logger
 from utils.data_reader import load_test_data
 from utils.screenshot import Screenshot
 
-full_config = load_test_data("processData.json")
+full_config = load_test_data("process/create_process.json")
 
 
 

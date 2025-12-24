@@ -1,5 +1,9 @@
 import json
 import csv
+import random
+import string
+import time
+import uuid
 from pathlib import Path
 
 def update_csv_with_json(csv_path: str, json_path: str, output_path: str | None = None) -> str:
@@ -13,10 +17,13 @@ def update_csv_with_json(csv_path: str, json_path: str, output_path: str | None 
     # 1. Read JSON
     with json_path.open("r", encoding="utf-8") as jf:
         json_data = json.load(jf)
-        json_headers = json_data.get("headers", {})
 
-    # Add auto-extracted process
+    json_headers = json_data.get("headers", {}).copy()
+
+    # ✅ Always update dynamic fields
     json_headers["process"] = process_name
+    json_headers["recordId"] = generate_unique_record_id()
+    json_headers["xsess.xsessid"] = generate_xsess_id()
 
     # 2. Read existing CSV
     with csv_path.open("r", newline='', encoding="utf-8") as cf:
@@ -44,6 +51,7 @@ def update_csv_with_json(csv_path: str, json_path: str, output_path: str | None 
     return str(output_path)
 
 
+
 def extract_process_name(file_name: str) -> str:
     """
     Extracts full process name from filename.
@@ -53,3 +61,15 @@ def extract_process_name(file_name: str) -> str:
     file_name = file_name.replace(".csv", "")
     parts = file_name.split("_", 1)  # split at first underscore only
     return parts[1] if len(parts) > 1 else ""
+
+def generate_unique_record_id(prefix="SS") -> str:
+    """
+    Generates a unique recordId using epoch time + random suffix.
+    Example: SS1753539105906_4831
+    """
+    millis = int(time.time() * 1000)
+    suffix = ''.join(random.choices(string.digits, k=4))
+    return f"{prefix}{millis}_{suffix}"
+
+def generate_xsess_id() -> str:
+    return uuid.uuid4().hex

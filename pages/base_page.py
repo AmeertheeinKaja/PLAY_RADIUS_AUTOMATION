@@ -1,8 +1,10 @@
 # ... existing imports ...
+import time
 from typing import Tuple # Ensure this import is present at the top
 from selenium.common import TimeoutException
-from selenium.webdriver import Keys
+from selenium.webdriver import Keys, ActionChains
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from utils.logger import get_logger
@@ -87,7 +89,8 @@ class BasePage:
         except Exception as e:
             self._handle_error("wait_invisible", locator, e)
 
-    def wait_loader_to_disappear(self, locator: Tuple[str, str], timeout: int = 10, initial_check_timeout: int = 1):
+    def wait_loader_to_disappear(self, locator: Tuple[str, str], timeout: int = 30,
+                                 initial_check_timeout: int = 1):  # Increased default timeout for loader
         """
         Waits for loader animation to disappear.
         Includes a short initial check for loader presence to avoid long waits if loader doesn't appear,
@@ -100,13 +103,16 @@ class BasePage:
                 loader_present = True
                 logger.info("Loader appeared.")
             except TimeoutException:
-                logger.debug(f"Loader element {locator} did not appear within {initial_check_timeout}s. Assuming it's not present or disappeared quickly.")
+                logger.debug(
+                    f"Loader element {locator} did not appear within {initial_check_timeout}s. Assuming it's not present or disappeared quickly.")
 
             if loader_present:
-                self.wait.until(EC.invisibility_of_element_located(locator))
+                WebDriverWait(self.driver, timeout).until(
+                    EC.invisibility_of_element_located(locator))  # Use the method's timeout
                 logger.info("Loader disappeared.")
             else:
-                logger.info("Loader was not observed during initial check, proceeding without waiting for invisibility.")
+                logger.info(
+                    "Loader was not observed during initial check, proceeding without waiting for invisibility.")
 
         except Exception as e:
             self._handle_error("wait_loader_to_disappear", locator, e)
@@ -231,19 +237,107 @@ class BasePage:
             self._handle_error("get_input_value", locator, e)
             return ""
 
-    def capture_toast(self, timeout=5):
+    def capture_toast(self, timeout=3):
+        locator = (By.XPATH, "//div[@role='status']")
+        end_time = time.time() + timeout
+        last_valid = None
+
+        while time.time() < end_time:
+            elements = self.driver.find_elements(*locator)
+
+            for el in elements:
+                txt = el.text.strip()
+                # Ignore Loading toast
+                if txt and txt != "Loading...":
+                    last_valid = txt
+
+            time.sleep(0.1)
+
+        if last_valid:
+            logger.info(f"Toast captured (final): {last_valid}")
+            return last_valid
+
+        # fallback: return the last "Loading" if nothing else appears
         try:
-            locator = (By.XPATH, "//div[@role='status']")
-            toast = WebDriverWait(self.driver, timeout).until(
-                EC.visibility_of_element_located(locator)
+            for el in self.driver.find_elements(*locator):
+                txt = el.text.strip()
+                if txt:
+                    logger.info(f"Toast fallback: {txt}")
+                    return txt
+        except:
+            pass
+
+        logger.warning("Toast could not be captured.")
+        return None
+
+    def get_select(self, locator):
+        element = self.wait_until_visible(locator)
+        return Select(element)
+
+    def is_element_present(self, locator):
+        try:
+            self.driver.find_element(*locator)
+            return True
+        except:
+            return False
+
+    def drag_scrollbar_slow(self, scroll_container):
+        action = ActionChains(self.driver)
+        start = scroll_container.location
+        size = scroll_container.size
+
+        start_x = start['x'] + size['width'] - 5
+        start_y = start['y'] + 10
+
+        end_y = start_y + size['height'] - 30
+
+        steps = 10
+        delta = (end_y - start_y) // steps
+
+        action.move_to_element_with_offset(scroll_container, size['width'] - 5, 10)
+        action.click_and_hold()
+
+        for i in range(steps):
+            action.move_by_offset(0, delta)
+            action.pause(0.1)
+
+        action.release().perform()
+
+    def scroll_element_slow(self, element, step=300, pause=0.3):
+        for _ in range(5):
+            try:
+                self.driver.execute_script(
+                    "arguments[0].scrollTop += arguments[1];", element, step
+                )
+                time.sleep(pause)
+            except Exception:
+                break
+
+    def is_clickable(self, locator, timeout=3):
+        try:
+            self.wait_until_clickable(locator, timeout=timeout)
+            return True
+        except:
+            return False
+
+    def scroll_and_click(self, locator, timeout=15):
+        el = self.wait_until_present(locator, timeout=timeout)
+
+        try:
+            self.driver.execute_script(
+                "arguments[0].scrollIntoView({block:'center'});", el
             )
-            message = toast.text.strip()
-            logger.info(f"Toast appeared: {message}")
-            WebDriverWait(self.driver, timeout).until(
-                EC.invisibility_of_element_located(locator)
-            )
-            return message
+        except:
+            pass
+
+        try:
+            self.wait_until_clickable(locator, timeout=timeout).click()
+            return
+        except:
+            pass
+
+        try:
+            self.driver.execute_script("arguments[0].click();", el)
+            return
         except Exception as e:
-            Screenshot.take(self.driver, "toast_capture_error")
-            logger.error(f"No toast captured: {e}", exc_info=True)
-            return None
+            raise Exception(f"Cannot click element {locator} -> {e}")
