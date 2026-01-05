@@ -1,3 +1,4 @@
+from selenium.webdriver.common.bidi.storage import Storage
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 from pages.common.loader import Loader
@@ -45,39 +46,59 @@ class CallStorageConfig(BasePage):
     STORAGE_EDIT_BTN  = (By.XPATH, f"{CALL_CONFIG_SCOPE}//button[@title='Edit']")
     STORAGE_TEST_BTN  = (By.XPATH, f"{CALL_CONFIG_SCOPE}//button[@title='Test Connection']")
 
+    ERROR_TEXT = "Connection failed. ERROR: sftp.connect: All configured authentication methods failed after 2 attempts"
+    INVALID_INPUT_PATH = (By.XPATH, f"{CALL_CONFIG_SCOPE}//div[contains(@class, 'invalid-tooltip')]")
+    INVALID_HOST_PATH=(By.XPATH, f"{CALL_CONFIG_SCOPE}//input[@name='host']/following-sibling::div[normalize-space()='This field is required']")
+    INVALID_PORT_PATH = (By.XPATH,
+                         f"{CALL_CONFIG_SCOPE}//input[@name='port']/following-sibling::div[normalize-space()='This field is required']")
+    INVALID_PASSWORD_PATH = (By.XPATH,
+                         f"{CALL_CONFIG_SCOPE}//input[@name='password']/following-sibling::div[normalize-space()='This field is required']")
+    INVALID_USER_PATH = (By.XPATH,
+                         f"{CALL_CONFIG_SCOPE}//input[@name='user']/following-sibling::div[normalize-space()='This field is required']")
 
+    SUCCESS_TEXT="Channel updated successfully"
 
 
 
     def __init__(self, driver):
         super().__init__(driver)
         self.loader = Loader(driver)
+        self.storage =None
+        self.last_toast = None
 
     # ----------------------------------------------------
     # STORAGE MAIN ENTRY
     # ----------------------------------------------------
-    def storage_config(self, storage_data):
-        storage_type = storage_data.get("type", "").lower()
 
-        if storage_type == "http":
+    def set_storage_type(self, storage_type: str):
+        self.storage = storage_type.lower()
+        logger.info(f"Setting storage type from test: {self.storage}")
+
+
+
+
+    def _apply_storage_fields(self, storage_data):
+        if self.storage == "http":
             self.http_config(storage_data.get("http", {}))
-        elif storage_type == "sftp":
+        elif self.storage == "sftp":
             self.sftp_config(storage_data.get("sftp", {}))
-        elif storage_type == "ftp":
+        elif self.storage == "ftp":
             self.ftp_config(storage_data.get("ftp", {}))
+
+    def storage_config(self, storage_data):
+        self._apply_storage_fields(storage_data)
 
     def edit_storage_config(self, storage_data):
-        storage_type = storage_data.get("type", "").lower()
-        self.click_edit()
-        if storage_type == "http":
-            self.http_config(storage_data.get("http", {}))
-        elif storage_type == "sftp":
-            self.sftp_config(storage_data.get("sftp", {}))
-        elif storage_type == "ftp":
-            self.ftp_config(storage_data.get("ftp", {}))
+        self.try_click_edit()
+        self._apply_storage_fields(storage_data)
 
+    def toast_text(self):
+        toast_text = self.capture_toast()
+        self.last_toast = toast_text  # Store the value
+        logger.info(f"Captured Toast: {toast_text}")
+        Screenshot.take(f"toast_{toast_text.replace(' ', '_')}")
 
-
+        return toast_text
     # ----------------------------------------------------
     # HTTP STORAGE CONFIG
     # ----------------------------------------------------
@@ -90,6 +111,7 @@ class CallStorageConfig(BasePage):
             field.send_keys(self.httpurl)
 
             self.click_save()
+            self.toast_text()
             self.loader.load()
             Screenshot.take(self.driver, "http-configured")
             logger.info("HTTP storage configured successfully.")
@@ -119,6 +141,7 @@ class CallStorageConfig(BasePage):
             self.wait_for_filter_ui_ready()
 
             self.click_save()
+            self.toast_text()
             self.loader.load()
             Screenshot.take(self.driver, "sftp-configured")
 
@@ -147,6 +170,7 @@ class CallStorageConfig(BasePage):
             self.wait_for_filter_ui_ready()
 
             self.click_save()
+            self.toast_text()
             self.loader.load()
             Screenshot.take(self.driver, "ftp-configured")
 
@@ -190,3 +214,43 @@ class CallStorageConfig(BasePage):
 
     def ftp(self):
         self.driver.find_element(*self.STORAGE_RADIO_FTP).click()
+
+    def wait_for_element_optional(self, locator, timeout=2):
+        try:
+            return self.wait_until_present(locator, timeout=timeout)
+        except:
+            return None
+
+    def try_click_edit(self):
+        try:
+            if self.is_element_present(self.STORAGE_EDIT_BTN):
+                logger.info("Edit button found. Clicking edit.")
+                self.click_edit()
+            else:
+                logger.info("Edit button not found. Skipping edit click.")
+        except Exception as e:
+            logger.error(f"Error while trying to click edit: {e}", exc_info=True)
+
+    def is_element_present(self, locator):
+        try:
+            self.driver.find_element(*locator)
+            return True
+        except:
+            return False
+    def get_error_message(self, locator):
+        try:
+            error_element = self.wait_until_visible(locator)
+            return error_element.text.strip()
+        except:
+            return None
+
+    def assert_success(self):
+        if self.last_toast != self.SUCCESS_TEXT:
+            raise AssertionError(f"Expected success toast but got: {self.last_toast}")
+        logger.info("Storage updated successfully.")
+
+    def assert_error(self, expected_message):
+        if expected_message not in (self.last_toast or ""):
+            raise AssertionError(
+                f"Expected error: '{expected_message}', got: '{self.last_toast}'"
+            )

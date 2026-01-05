@@ -5,13 +5,22 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from pages.base_page import BasePage
+from pages.common.sidemenupage import SideMenuPage
+from pages.process.process_manager.create_process import CreateProcess
 from pages.process.process_manager.search_process import OpenProcess
 from pages.process.process_manager.process_filter import ProcessFilter
 from pages.common.open_filter_search import FilterSearch
 from pages.process.channel_config.call.call_stt_config import CallSTTConfig
 from pages.common.loader import Loader
+from pages.record.ai_insights_page import AIInsightsPage
+from pages.record.email.email_record_page import EmailPage
+from pages.record.rating_page import RatingPage
+from pages.record.record_controls.record_navigator import RecordNavigator
+from pages.record.record_controls.record_page_tabs import RecordPageTabs
+from pages.record.record_controls.record_recent_record import RecentRecordsMenu
 from utils.logger import get_logger
 from utils.screenshot import Screenshot
+from pages.record.chat.chat_record_page import ChatPage
 from pages.process.channel_config.channel_config_router import ChannelConfigRouter
 logger = get_logger(__name__)
 
@@ -43,6 +52,14 @@ class RecordPage(BasePage):
     DOWNLOAD_AUDIO_BTN = (By.XPATH, f"{AUDIO_PLAYER_SCOPE}//a[@title='Download Audio']")
     error_text="Key file is missing."
     ERROR_MEDIA_NOT_FOUND="Media Not Found"
+    RECORD_ID = (By.XPATH, "//span[starts-with(@title, 'RecordId')]")
+    CHAT_MESSAGES = (By.CSS_SELECTOR, ".chat_messages .message_row")
+    EMAIL_ITEMS = (By.CSS_SELECTOR, ".pw_mail_list_item")
+    INTERACTION_TYPE = (
+        By.XPATH,
+        "//span[contains(@class,'icon-inbound') or contains(@class,'icon-outbound')]"
+        "/following-sibling::span"
+    )
 
 
 
@@ -53,23 +70,40 @@ class RecordPage(BasePage):
         self.open_filter = FilterSearch(driver)
         self.process_filter = ProcessFilter(driver)
         self.call_stt_config = CallSTTConfig(driver)
+        self.navigator = RecordNavigator(self.driver)
+        self.recent_records_menu = RecentRecordsMenu(driver)
         self.router = ChannelConfigRouter(driver, config_data)
+        self.process_manager=CreateProcess(driver)
+        self.side_menu_page = SideMenuPage(driver)
+        self.record_tabs = RecordPageTabs(driver)
+        self.ai_insights_page = AIInsightsPage(driver)
+        self.rating_page = RatingPage(driver)
         self.process_name=None
         self.channel=None
+        self.record_id=None
+        self.interaction_type=None
 
         self.config_data = config_data
 
     def record_info(self,error_message=None):
         self.error_message=error_message
         # Capture toast only once
-        # if not self.error_message:
-        #     self.find_message()
-
+        if not self.error_message:
+            self.find_message()
+        self.find_record_id()
         self.find_channel()
         self.find_process_name()
-        if self.check_media_not_found():
-            return  # handled, nothing more to do
-        self.handle_record_flow()
+        self.get_interaction_type()
+
+        if not self.has_record_data():
+            logger.info(f"ℹ No {self.channel} data found for record {self.record_id}. Skipping.")
+            return "NO_DATA"
+        #
+        # if self.check_media_not_found():
+        #     return  # handled, nothing more to do
+        # if self.channel == "chat":
+        #     return self._handle_chat_channel()
+        # self.handle_record_flow()
 
 
     def get_record_type(self):
@@ -94,6 +128,25 @@ class RecordPage(BasePage):
     def find_channel(self):
         self.channel=self.get_record_type().lower()
         logger.info(f"Record Channel is: {self.channel}")
+
+    def find_record_id(self):
+        try:
+            # Wait for the element
+            record_element = self.wait_until_visible(self.RECORD_ID)
+
+            # Clean the text (removes '(' and ')')
+            self.record_id = record_element.text.strip("()")
+
+            logger.info(f"Record ID successfully retrieved: {self.record_id}")
+
+            # Ensure you are returning the value you need
+            return self.record_id
+
+        except Exception as e:
+            logger.error(f"Error retrieving Record ID: {e}", exc_info=True)
+            Screenshot.take(self.driver, "Record_ID_Error")
+            return None
+
 
     def find_message(self):
         if self.error_message:
@@ -127,6 +180,7 @@ class RecordPage(BasePage):
             return None
     def generate_transcript(self):
         self.click_generate_btn()
+
 
     def click_generate_btn(self):
         try:
@@ -214,7 +268,15 @@ class RecordPage(BasePage):
         self.open_filter.filter()
         self.process_filter.apply_filter_by_name(self.process_name)
         self.open_process.view_process()
+        self.process_manager.ensure_channel_enabled(self.channel)
+        # self.recent_records_menu.click_record_by_href_id(self.record_id)
 
+    def return_to_record(self):
+        """
+        Navigates back to the previously opened record
+        """
+        logger.info(f"↩ Returning to record: {self.record_id}")
+        self.recent_records_menu.click_record_by_href_id(self.record_id)
 
     def media_not_found(self):
         if self.error_message == self.ERROR_MEDIA_NOT_FOUND:
@@ -237,6 +299,33 @@ class RecordPage(BasePage):
             Screenshot.take(self.driver, "Media_Not_Found_Click_Error")
             return False
 
+    def handle_data_not_found(self):
+        """
+        Called when record opens but channel data is missing
+        """
+        logger.warning(
+            f"⚠ {self.channel.upper()} data not found for record {self.record_id}"
+        )
+
+        self.open_process_page()
+
+        if self.channel == "call":
+            logger.info("Routing call storage missing key...")
+            self.router.route_call_storage_missing_key()
+
+        elif self.channel == "chat":
+            logger.info("Routing chat storage missing key...")
+            self.router.route_chat_storage_missing_key()
+
+        elif self.channel == "email":
+            logger.info("Routing email storage missing key...")
+            self.router.route_email_storage_missing_key()
+
+        elif self.channel == "video":
+            logger.info("Video storage handling not implemented yet")
+
+        self.return_to_record()
+        logger.info("✅ Storage reconfiguration triggered due to missing data")
 
     def handle_record_flow(self):
 
@@ -252,9 +341,40 @@ class RecordPage(BasePage):
         else:
             logger.info("ℹ No matching error message. Skipping process page opening.")
 
+    def has_chat_data(self):
+        return len(self.driver.find_elements(*self.CHAT_MESSAGES)) > 0
 
+    def has_email_data(self):
+        return len(self.driver.find_elements(*self.EMAIL_ITEMS)) > 0
 
+    def has_call_data(self):
+        return self.is_element_present(self.PLAY_BTN)
 
+    def has_video_data(self):
+        return self.is_element_present((By.TAG_NAME, "video"))
+
+    def has_record_data(self):
+        if self.channel == "chat":
+            return self.has_chat_data()
+        if self.channel == "email":
+            return self.has_email_data()
+        if self.channel == "call":
+            return self.has_call_data()
+        if self.channel == "video":
+            return self.has_video_data()
+        return False
+
+    def get_interaction_type(self):
+        """
+        Returns interaction type: Inbound / Outbound
+        """
+        element = self.wait_until_visible(self.INTERACTION_TYPE)
+        interaction_type = element.text.strip()
+
+        self.interaction_type = interaction_type
+        logger.info(f"Interaction type detected: {interaction_type}")
+
+        return interaction_type
     def handle_missing_key(self):
 
         if self.channel == "call":
@@ -304,3 +424,105 @@ class RecordPage(BasePage):
             Screenshot.take(self.driver, f"Sidebar_record_open_error_{record_id}")
             return False
 
+    def _handle_chat_channel(self):
+        """
+        Handle CHAT channel record actions
+        """
+        logger.info("Handling CHAT channel")
+
+        chat_page = ChatPage(self.driver)
+
+        if not chat_page.has_messages():
+            logger.info("Chat data not found")
+            return "CHAT_DATA_NOT_FOUND"
+
+        chat_page.add_comment_to_first_message("Automation test comment")
+        chat_page.translate_chat("English", use_search=True)
+        chat_page.back_to_original()
+
+        return "CHAT_SUCCESS"
+
+    def process_current_record(self):
+        self.record_info()
+
+        if self.error_message == self.error_text:
+            logger.warning("⚠ Key file missing detected")
+            logger.info(f"error_message: {self.error_message}++ expected: {self.error_text}")
+            self.handle_record_flow()
+            self.return_to_record()
+            self.open_process_page()
+            self.handle_missing_key()
+            self.return_to_record()
+
+            self.record_info()
+            self._handle_record_tabs()
+            return
+
+        if self.check_media_not_found():
+            self.record_info()
+            self._handle_record_tabs()
+            return
+
+        if not self.has_record_data():
+            self.handle_data_not_found()
+
+            self.record_info()
+            self._handle_record_tabs()
+            return
+
+        # -----------------------------
+        # CHANNEL-SPECIFIC ACTIONS
+        # -----------------------------
+        try:
+            if self.channel == "chat":
+                chat_page = ChatPage(self.driver)
+                if chat_page.has_messages():
+                    chat_page.add_comment_to_first_message("Automation test comment")
+                    chat_page.translate_chat("Japanese", use_search=True)
+                    self.loader.load()
+                    chat_page.back_to_original()
+
+            elif self.channel == "email":
+                email_page = EmailPage(self.driver)
+                if email_page.has_emails():
+                    mail = email_page.open_first_mail()
+                    interaction = email_page.get_interaction_type(mail)
+                    logger.info(f"📧 Email interaction type: {interaction}")
+                    email_page.close_mail(mail)
+
+        except Exception:
+            logger.error("❌ Channel handling failed", exc_info=True)
+
+        # -----------------------------
+        # RECORD-LEVEL TABS (ALWAYS)
+        # -----------------------------
+        self._handle_record_tabs()
+
+    def _handle_record_tabs(self):
+        """
+        Handles common record tabs for ALL channels
+        """
+        logger.info("📑 Navigating record tabs")
+
+        try:
+            self.record_tabs.switch_tabs("ai_insights")
+            self.ai_insights_page.ai_insights_info()
+        except Exception:
+            logger.warning("AI Insights tab not available")
+
+        try:
+            self.record_tabs.switch_tabs("ratings")
+        except Exception:
+            logger.warning("Ratings tab not available")
+
+        try:
+            self.record_tabs.switch_tabs("comments")
+        except Exception:
+            logger.warning("Comments tab not available")
+
+    def process_all_records(self):
+        navigator = RecordNavigator(self.driver)
+
+        navigator.iterate_all_records(
+            callback=lambda _: self.process_current_record()
+        )

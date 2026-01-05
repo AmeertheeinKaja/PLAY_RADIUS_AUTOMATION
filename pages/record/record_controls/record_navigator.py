@@ -6,6 +6,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 from pages.base_page import BasePage
 from pages.common.loader import Loader
+from pages.pagination.pagination import Pagination
 from utils.screenshot import Screenshot
 from utils.logger import get_logger
 
@@ -116,7 +117,7 @@ class RecordNavigator(BasePage):
             Screenshot.take("Close_Record", self.driver)
             logger.info("✅ Record closed successfully.")
 
-    def iterate_all_records(self, callback=None):
+    def iterate_all_records_old(self, callback=None):
         """
         Iterates through all records starting from the currently opened record.
         Applies callback(record_index) at each record if provided.
@@ -153,3 +154,70 @@ class RecordNavigator(BasePage):
 
         logger.info("✔️ Finished iterating all records.")
 
+    def iterate_all_records(self, callback=None):
+        """
+        Iterates records across pages.
+        Priority:
+        1️⃣ Next Record
+        2️⃣ Pagination Next Page
+        """
+        pagination = Pagination(self.driver)
+        record_index = 1
+
+        logger.info("🚀 Starting record iteration across pages")
+
+        while True:
+            logger.info(f"\n📄 Processing Record #{record_index}")
+
+            # -----------------------------------
+            # 1️⃣ Process current record
+            # -----------------------------------
+            if callback:
+                try:
+                    callback(record_index)
+                except Exception as e:
+                    logger.error(
+                        f"❌ Callback failed for record {record_index}",
+                        exc_info=True
+                    )
+
+            # -----------------------------------
+            # 2️⃣ Try NEXT RECORD
+            # -----------------------------------
+            if not self.is_button_disabled(self.NEXT_RECORD_BTN, "Next Record"):
+                success = self._navigate(self.NEXT_RECORD_BTN, "Next Record")
+                if not success:
+                    logger.error("❌ Failed to navigate to next record")
+                    break
+
+                record_index += 1
+                continue
+
+            # -----------------------------------
+            # 3️⃣ NEXT RECORD DISABLED → CHECK PAGE
+            # -----------------------------------
+            logger.info("⛔ Next Record disabled. Checking next page...")
+
+            self.close_record()
+
+            if not pagination.is_next_page_disabled():
+                logger.info("➡ Moving to next page")
+                pagination.go_to_next()
+
+                # Open first record on the new page
+                first_row = self.wait_until_clickable(
+                    (By.XPATH, "//tbody/tr[1]")
+                )
+                self.safe_click(first_row, "First Record on New Page")
+                self.loader.load()
+
+                record_index += 1
+                continue
+
+            # -----------------------------------
+            # 4️⃣ NO RECORDS & NO PAGES
+            # -----------------------------------
+            logger.info("🏁 No more records and no more pages. Stopping.")
+            break
+
+        logger.info("✔️ Finished iterating all records.")

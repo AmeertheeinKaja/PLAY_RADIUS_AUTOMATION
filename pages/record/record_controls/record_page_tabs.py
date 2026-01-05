@@ -76,7 +76,7 @@ class RecordPageTabs(BasePage):
             logger.info(f"[RecordPageTabs] Channel identified: {self.channel}")
         except Exception as e:
             logger.error(f"Failed to detect channel: {e}")
-            Screenshot.take("channel_detect_failed")
+            Screenshot.take(self.driver,f"channel_detect_failed")
         return self.channel
 
     # ----------------------------------------------------------
@@ -97,7 +97,7 @@ class RecordPageTabs(BasePage):
                 self.driver.execute_script("arguments[0].click();", element)
             except Exception:
                 logger.error(f"[RecordPageTabs] JS click also failed on {name}")
-                Screenshot.take(f"click_failed_{name}")
+                Screenshot.take(self.driver,f"click_failed_{name}")
                 raise
 
     # ----------------------------------------------------------
@@ -127,7 +127,7 @@ class RecordPageTabs(BasePage):
             logger.warning(
                 f"[RecordPageTabs] '{tab_name}' is NOT allowed for channel '{self.channel}'. Skipping."
             )
-            Screenshot.take(f"skipped_invalid_tab_{tab_name}")
+            Screenshot.take(self.driver,f"skipped_invalid_tab_{tab_name}")
             return False  # <-- no failure, just skip
 
         # ---------- Locator fetch ----------
@@ -137,7 +137,7 @@ class RecordPageTabs(BasePage):
             logger.warning(
                 f"[RecordPageTabs] No locator found for tab '{tab_name}'. Skipping."
             )
-            Screenshot.take(f"missing_locator_{tab_name}")
+            Screenshot.take(self.driver,f"missing_locator_{tab_name}")
             return False
 
         # ---------- EARLY EXIT IF ELEMENT NOT PRESENT ----------
@@ -145,7 +145,7 @@ class RecordPageTabs(BasePage):
             logger.warning(
                 f"[RecordPageTabs] Tab '{tab_name}' is NOT present on this UI. Skipping."
             )
-            Screenshot.take(f"tab_not_present_{tab_name}")
+            Screenshot.take(self.driver,f"tab_not_present_{tab_name}")
             return False
 
         # ---------- Try clicking ----------
@@ -159,7 +159,7 @@ class RecordPageTabs(BasePage):
 
         except Exception as e:
             logger.error(f"[RecordPageTabs] ❌ Failed switching to tab '{tab_name}': {e}")
-            Screenshot.take(f"switch_failed_{tab_name}")
+            Screenshot.take(self.driver,f"switch_failed_{tab_name}")
             return False  # <-- again: no crash
 
     def open_home_tab(self):
@@ -179,7 +179,7 @@ class RecordPageTabs(BasePage):
         if not home_tab:
             msg = f"[RecordPageTabs] No HOME tab configured for channel: {self.channel}"
             logger.error(msg)
-            Screenshot.take(f"missing_home_tab_{self.channel}")
+            Screenshot.take(self.driver,f"missing_home_tab_{self.channel}")
             raise Exception(msg)
 
         logger.info(f"[RecordPageTabs] Opening HOME tab: {home_tab}")

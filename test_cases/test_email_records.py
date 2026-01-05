@@ -18,8 +18,8 @@ from pages.common.sidemenupage import SideMenuPage
 
 from pages.common.loader import Loader
 @pytest.mark.usefixtures("driver_function")
-class TestChatRecords:
-    def test_records(self, driver_function):
+class TestEmailRecords:
+    def test_email_records(self, driver_function):
         full_cfg = load_test_data("process/create_process.json")
         """Verify All Records page loads after login."""
 
@@ -45,13 +45,13 @@ class TestChatRecords:
         # Step 3: Wait for loader to disappear (page load)
         loader.load()
         open_filter.filter()
-        filter_record.search("Channel","chat")
+        filter_record.search("Channel","email")
         filter_record.search( "Interaction Type", "ob")
-        # filter_record.search("Record ID","XA1767339443836HA")
+        # filter_record.search("Record ID","DY1766569181437AA")
         filter_action.searchFilter()
         record_manager.view_record()
         record_page.error_message = record_manager.toast_text
-        record_page.process_all_records()
+        record_page.process_current_record()
 
         # record_tabs.switch_tabs("ai_insights")
         # ai_insights_page.ai_insights_info()

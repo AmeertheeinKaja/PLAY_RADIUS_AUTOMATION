@@ -62,3 +62,19 @@ class Pagination(BasePage):
 
         per_page = 20
         return (total + per_page - 1) // per_page  # ceil division
+
+    def is_next_page_disabled(self):
+        try:
+            btn = self.wait_until_present(self.NEXT_BTN)
+
+            if not btn.is_enabled():
+                return True
+
+            classes = btn.get_attribute("class").lower()
+            if "disabled" in classes:
+                return True
+
+            return False
+
+        except Exception:
+            return True
